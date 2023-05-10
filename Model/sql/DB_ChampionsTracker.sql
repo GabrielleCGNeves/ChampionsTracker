@@ -1,5 +1,5 @@
-CREATE DATABASE DB_ChampionsTracker;
-USE DB_ChampionsTracker;
+CREATE DATABASE ChampionsTracker;
+USE ChampionsTracker;
 
 CREATE TABLE TB_Usuario(
     usu_idUsuario INT NOT NULL PRIMARY KEY,
@@ -42,14 +42,14 @@ CREATE TABLE TB_Equipe(
 
 CREATE TABLE TB_Jogador_da_Equipe(
     jog_idJogador INT NOT NULL,
-    usu_idUsuario INT NOT NULL,
+    equ_idEquipe INT NOT NULL,
     je_pontosIndividuais INT NOT NULL,
     FOREIGN KEY(jog_idJogador)
         REFERENCES TB_Jogador(jog_idJogador)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    FOREIGN KEY(usu_idUsuario)
-        REFERENCES TB_Usuario(usu_idUsuario)
+    FOREIGN KEY(equ_idEquipe)
+        REFERENCES TB_Equipe(equ_idEquipe)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
@@ -57,7 +57,7 @@ CREATE TABLE TB_Jogador_da_Equipe(
 CREATE TABLE TB_Regra (
     reg_idRegra INT NOT NULL PRIMARY KEY,
     usu_idUsuario INT NOT NULL,
-    reg_nome VARCHAR(30) NOT NULL
+    reg_nome VARCHAR(30) NOT NULL,
     FOREIGN KEY(usu_idUsuario)
         REFERENCES TB_Usuario(usu_idUsuario)
             ON DELETE NO ACTION
@@ -100,7 +100,7 @@ CREATE TABLE TB_Equipe_do_Campeonato(
     ec_derrota INT NOT NULL,
     ec_empate INT NOT NULL,
     FOREIGN KEY(equ_idEquipe)
-        REFERENCES TB_Equipe(equ_idEquipe),
+        REFERENCES TB_Equipe(equ_idEquipe)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     FOREIGN KEY(cam_idCampeonato)
