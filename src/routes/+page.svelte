@@ -1,4 +1,5 @@
 <script>
+    import Butao from "../lib/components/Butao.svelte";
 </script>
 
 <div class="title-button">
@@ -6,6 +7,7 @@
         Titulo
     </h1>
 
+    <Butao />
 </div>
 
 <p>
