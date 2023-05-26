@@ -1,8 +1,13 @@
-<button class="btn-butao" type="button">VER MAIS</button>
+<script>
+    export let texto;
+    export let ref;
+</script>
+
+<button {ref} class="btn-butao" type="button">{texto}</button>
 
 <style>
     .btn-butao{
-        background-color: var(--tertiary-color);
+        /* background-color: var(--tertiary-color); */
         color: var(--text-color);
         padding: 0.75rem 1.5rem;
         font-size: 0.75rem;
@@ -13,7 +18,7 @@
     }
 
     .btn-butao:hover{
-        background-color: var(--secondary-color);
+        /* background-color: var(--secondary-color); */
         border-color: var(--secondary-color);
         cursor: pointer;
     }
