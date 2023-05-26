@@ -4,6 +4,7 @@
     --primary-color: #0A092D;
     --secondary-color: #2E3856;
     --tertiary-color: #04031F;
+    --forms-color: #180D35;
     --icons-color: #76809D;
     --highlight-color: #B156E7;
     --transition-speed: 600ms;
@@ -26,6 +27,25 @@
 .title{
     font-size: 1.75rem;
     font-weight: bold;
+}
+
+.details{
+    font-size: 0.9rem;
+}
+
+.input{
+    background-color: var(--forms-color);
+    font-style: italic;
+    border-color: var(--primary-color);
+    border-style: none;
+    color: var(--text-color);
+    padding: 1rem;
+    margin: 0.5rem;
+    width: 75%
+}
+
+.grid-item{
+    text-align: center;
 }
 
 body{
