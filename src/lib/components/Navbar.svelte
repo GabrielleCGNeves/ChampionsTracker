@@ -5,10 +5,8 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg viewBox="0 0 68 61" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path class="svg-color" d="M26.3659 57.0954V38.9124H40.9123V57.0954C40.9123 59.0955 42.5487 60.732 44.5489 60.732H55.4587C57.4588 60.732 59.0953 59.0955 59.0953 57.0954V31.6392H65.2775C66.9503 31.6392 67.7504 29.5663 66.4776 28.4753L36.0756 1.09176C34.6937 -0.144682 32.5845 -0.144682 31.2026 1.09176L0.800596 28.4753C-0.435848 29.5663 0.327838 31.6392 2.00067 31.6392H8.18289V57.0954C8.18289 59.0955 9.81936 60.732 11.8195 60.732H22.7293C24.7294 60.732 26.3659 59.0955 26.3659 57.0954Z"/>
-                    </svg>
+            <a href="./" class="nav-link">
+                <img src="trophy.png" alt="" srcset="">
                     
                 <div class="link-desc">
                     <span class="link-title">Página Inicial</span>
