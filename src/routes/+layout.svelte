@@ -1,15 +1,25 @@
 <script>
 import '../style.css'
-import Navbar from "../lib/components/Navbar.svelte";
+import Navbar from "$lib/components/Navbar.svelte";
+import { page } from '$app/stores'
 </script>
 
 <div>
-    <Navbar />
+    {#if  $page.url.pathname === '/tournament'}
+    
+        <main>
+            <slot />
+        </main>
 
-    <main>
-        <slot />
-    </main>
+    {:else}
 
+        <Navbar />
+
+        <main>
+            <slot />
+        </main>
+
+    {/if}
 </div>
 
 <style>
