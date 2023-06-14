@@ -2,7 +2,7 @@
     import Butao from "$lib/components/Butao.svelte";
 </script>
 
-<p class="title">Logue no Champions Tracker</p>
+<p class="page-title">Logue no Champions Tracker</p>
 <p class="details">Logar com</p>
 
 <div class="grid-container">
