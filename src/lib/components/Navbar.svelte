@@ -121,11 +121,9 @@
 
     /*      NAV BAR     */
 .navbar{
-    width: 5rem;
-    height: 100vh;
     position: fixed;
     background-color: var(--secondary-color);
-    transition: 200ms ease;
+    transition: width 200ms ease;
 }
 
 .navbar-nav{
@@ -148,6 +146,7 @@
     height: 5rem;
     color: azure;
     text-decoration: none;
+    transition: (--transition-speed);
 }
 
 .link-desc{
@@ -160,28 +159,30 @@
     min-width: 2rem;
     margin: 0 1.5rem;
     color: var(--icons-color);
-    transform: var(--transition-speed);
+}
+
+.nav-link img {
+    filter: grayscale(1) opacity(0.8);
+    width: 3rem;
+    margin: 0 1rem;
+    transition: var(--transition-speed);
+}
+
+.nav-link:hover img {
+    filter: grayscale(0%) opacity(1);
 }
 
 .navbar:hover{
-    width: 16rem;
-    filter: grayscale(0%) opacity(1);
+    /* filter: grayscale(0%) opacity(1); */
     color: var(--icons-color);
-}
-
-.navbar:hover .link-desc{
-    display: block;
 }
 
 .svg-color {
     color: var(--icons-color);
-}
-
-.svg-color{
     transition: var(--transition-speed);
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1080px) {
     .navbar{
         top: 0;
         width: 5rem;
@@ -194,12 +195,12 @@
 
     .navbar:hover .link-desc{
         display: inline;
-        transition: opacity var(--transition-speed);
     }
+    
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1080px) {
     .navbar{
         bottom: 0;
         width: 100vw;
