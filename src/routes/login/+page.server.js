@@ -20,27 +20,3 @@
 //   }
 // }
 
-import { prisma } from '$lib/server/prisma'
-import { fail } from "@sveltejs/kit"
-
-export const actions = {
-    createUser: async ({ request }) => {
-        const { email, senha } = Object.fromEntries(await request.formData())
-        
-        try {
-            await prisma.tb_usuario.create({
-                data: {
-                    email,
-                    senha
-                }
-            })
-        } catch (err) {
-            console.error(err)
-            return fail(500, ('Erro ao cadastrar usuário'))
-        }
-        return {
-            status: 201
-        }
-    }
-
-}
