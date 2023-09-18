@@ -1,33 +1,21 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
-    import { open_modal } from "./modal.js";
     
     let receivedImage = "";
+
+    export let data
+
+    $: ({ equipe } = data);
     
-    // import Modal from "$lib/components/Modal.svelte";
-    // let isModalOpen = false;
-
-    // function openModal() {
-    //     isModalOpen = true;
-    // }
-
-    // function closeModal() {
-    //     isModalOpen = false;
-    // }
 </script>
 <main class="main-content">
-    <p class="page-title">CADASTRO</p>
-
-    <div class="grid-container">
-        <Butao ref="team" texto={"EQUIPE"} />
-        <Butao ref="champion" texto={"CAMPEONATO"} />
-    </div>
+    <p class="page-title">Editando {equipe.equ_nome}</p>
 
     <br />
     <br />
 
-    <form action="?/createTeam" method="POST" class="forms">
+    <form action="?/updateTeam" method="POST" class="forms">
         <div class="flex">
             <div>
                 <input
@@ -35,6 +23,7 @@
                     class="input-name input-border input-block"
                     name="teamName"
                     placeholder="Nome da Equipe"
+                    value={equipe.equ_nome}
                 />
         
                 <label for="">Nº de Jogadores</label>
@@ -42,6 +31,7 @@
                     type="number"
                     class="input-border input-number"
                     name="teamNumber"
+                    value={equipe.equ_numjogadores}
                 />
             </div>
             <ImageUploader on:message={e => receivedImage = e.detail}/>
@@ -67,40 +57,14 @@
             cols="70"
             rows="10"
             placeholder="Descrição"
+            value={equipe.equ_desc}
         />
 
         <br />
 
-        <!-- Modal Start -->
-        <!-- <div class="modal-container" id="modal-visibility">
-            <div class="modal">
-                <div class="modal-header grid-container">
-                    <a href="">Adicionar Jogador</a>
-                </div>
-                <div class="modal-content">
-                    <p class="text">Adicione um jogador caso o mesmo não possua uma conta</p>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="modal-container" id="modal-visibility">
-            <div class="modal">
-                <div class="modal-header grid-container">
-                    <a href="">Adicionar Jogador</a>
-                </div>
-                <div class="modal-content">
-                    <p class="text">Adicione um jogador caso o mesmo não possua uma conta</p>
-                </div>
-            </div>
-        </div> -->
-        <!-- Modal End -->
-        
+            
         <Butao ref="save" texto={"SALVAR"} tipo="submit" />
     </form>
-    
-    <!-- <button on:click={openModal}>Abrir Modal</button>
-    <Modal bind:isOpen={isModalOpen} title="Meu Modal" close={closeModal}>
-        <p>Conteúdo do modal aqui.</p>
-    </Modal> -->
 </main>
 
 <style>

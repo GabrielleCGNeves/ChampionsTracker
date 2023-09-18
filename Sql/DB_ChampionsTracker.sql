@@ -1,192 +1,140 @@
 CREATE DATABASE ChampionsTracker;
 USE ChampionsTracker;
 
-CREATE TABLE TB_Usuario(
-    usu_idUsuario INT NOT NULL PRIMARY KEY,
-    usu_email VARCHAR(50) NOT NULL,
-    usu_senha VARCHAR(255) NOT NULL,
-    usu_nome VARCHAR(50) NOT NULL,
-    usu_apelido VARCHAR(30) NOT NULL,
-    usu_foto VARCHAR(255) NOT NULL,
-    usu_pontosTotais INT NULL,
-    usu_pontosPalpites INT NULL
+CREATE TABLE `tb_usuario` (
+	`usu_idusuario` int NOT NULL AUTO_INCREMENT,
+	`usu_email` varchar(255) NOT NULL,
+	`usu_senha` varchar(100) NOT NULL,
+	`usu_nome` varchar(100) NOT NULL,
+	`usu_apelido` varchar(100) NOT NULL,
+	`usu_foto` varchar(255) NOT NULL,
+	`usu_pontostotais` int NOT NULL,
+	PRIMARY KEY (`usu_idusuario`)
 );
 
-CREATE TABLE TB_Jogador (
-    jog_idJogador INT NOT NULL PRIMARY KEY,
-    usu_idUsuario INT,
-    jog_nome VARCHAR(50),
-    jog_apelido VARCHAR(30) NOT NULL,
-    jog_foto VARCHAR(255),
-    jog_pontosAcumulados INT,
-    FOREIGN KEY(usu_idUsuario)
-        REFERENCES TB_Usuario(usu_idUsuario)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_jogador` (
+	`jog_idjogador` int NOT NULL AUTO_INCREMENT,
+	`usu_idusuario` int,
+	`jog_nome` varchar(100) NOT NULL,
+	`jog_apelido` varchar(100) NOT NULL,
+	`jog_foto` varchar(255) NOT NULL,
+	`jog_pontosacumulados` int NOT NULL,
+	PRIMARY KEY (`jog_idjogador`)
 );
 
-CREATE TABLE TB_Equipe(
-    equ_idEquipe INT NOT NULL PRIMARY KEY,
-    usu_idUsuario INT NOT NULL,
-    equ_nome VARCHAR(30) NOT NULL,
-    equ_foto VARCHAR(255) NOT NULL,
-    equ_desc VARCHAR(100) NULL,
-    equ_numJogadores INT NOT NULL,
-    equ_pontosTotais INT NULL,
-    FOREIGN KEY(usu_idUsuario)
-    REFERENCES TB_Usuario(usu_idUsuario)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
-    
+CREATE TABLE `tb_equipe` (
+	`equ_idequipe` int NOT NULL AUTO_INCREMENT,
+	`usu_idusuario` int NOT NULL,
+	`equ_nome` varchar(100) NOT NULL,
+	`equ_foto` varchar(255),
+	`equ_desc` varchar(500) NOT NULL,
+	`equ_numjogadores` int NOT NULL,
+	`equ_pontostotais` int NOT NULL,
+	PRIMARY KEY (`equ_idequipe`)
 );
 
-CREATE TABLE TB_Jogador_da_Equipe(
-    jog_idJogador INT NOT NULL,
-    equ_idEquipe INT NOT NULL,
-    je_pontosIndividuais INT NOT NULL,
-    FOREIGN KEY(jog_idJogador)
-        REFERENCES TB_Jogador(jog_idJogador)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(equ_idEquipe)
-        REFERENCES TB_Equipe(equ_idEquipe)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_jogador_da_equipe` (
+	`jog_idjogador` int NOT NULL,
+	`equ_idEquipe` int NOT NULL,
+	`je_pontosindividuais` int NOT NULL
 );
 
-CREATE TABLE TB_Regra (
-    reg_idRegra INT NOT NULL PRIMARY KEY,
-    usu_idUsuario INT NOT NULL,
-    reg_nome VARCHAR(30) NOT NULL,
-    FOREIGN KEY(usu_idUsuario)
-        REFERENCES TB_Usuario(usu_idUsuario)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_regra` (
+	`reg_idregra` int NOT NULL AUTO_INCREMENT,
+	`usu_idusuario` int NOT NULL,
+	PRIMARY KEY (`reg_idregra`)
 );
 
-CREATE TABLE TB_Regra_Atributo (
-    rat_idRegraAtributo INT NOT NULL PRIMARY KEY,
-    reg_idRegra INT NOT NULL,
-    rat_nome INT NOT NULL,
-    rat_pontos INT NOT NULL,
-    FOREIGN KEY(reg_idRegra)
-        REFERENCES TB_Regra(reg_idRegra)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_regra_atributo` (
+	`rat_idregraatributo` int NOT NULL AUTO_INCREMENT,
+	`reg_idregra` int NOT NULL,
+	`rat_nome` int NOT NULL,
+	`rat_pontos` int NOT NULL,
+	PRIMARY KEY (`rat_idregraatributo`)
 );
 
-CREATE TABLE TB_Campeonato (
-    cam_idCampeonato INT NOT NULL PRIMARY KEY,
-    usu_idUsuario INT NOT NULL,
-    reg_idRegra INT NOT NULL,
-    cam_nome VARCHAR(30) NOT NULL,
-    cam_foto VARCHAR(255),
-    cam_desc VARCHAR(100),
-    cam_status VARCHAR(1),
-    FOREIGN KEY(usu_idUsuario)
-        REFERENCES TB_Usuario(usu_idUsuario)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(reg_idRegra)
-        REFERENCES TB_Regra(reg_idRegra)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_campeonato` (
+	`cam_idcampeonato` int NOT NULL AUTO_INCREMENT,
+	`usu_idusuario` int NOT NULL,
+	`reg_idregra` int NOT NULL,
+	`cam_nome` varchar(100) NOT NULL,
+	`cam_foto` varchar(255) NOT NULL,
+	`cam_desc` varchar(500) NOT NULL,
+	`cam_status` varchar(50) NOT NULL,
+	PRIMARY KEY (`cam_idcampeonato`)
 );
 
-CREATE TABLE TB_Equipe_do_Campeonato(
-    equ_idEquipe INT NOT NULL,
-    cam_idCampeonato INT NOT NULL,
-    ec_vitoria INT NOT NULL,
-    ec_derrota INT NOT NULL,
-    ec_empate INT NOT NULL,
-    FOREIGN KEY(equ_idEquipe)
-        REFERENCES TB_Equipe(equ_idEquipe)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(cam_idCampeonato)
-        REFERENCES TB_Campeonato(cam_idCampeonato)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_equipe_do_campeonato` (
+	`equ_idequipe` int NOT NULL,
+	`cam_idcampeonato` int NOT NULL,
+	`ec_vitoria` int NOT NULL,
+	`ec_derrota` int NOT NULL,
+	`ec_empate` int NOT NULL
 );
 
-CREATE TABLE TB_Partida (
-    par_idPartida INT NOT NULL PRIMARY KEY,
-    cam_idCampeonato INT NOT NULL,
-    par_data DATETIME NOT NULL,
-    FOREIGN KEY(cam_idCampeonato)
-        REFERENCES TB_Campeonato(cam_idCampeonato)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_pontos_equipe` (
+	`poe_idpontosequipe` int NOT NULL AUTO_INCREMENT,
+	`par_idpartida` int NOT NULL,
+	`equ_idequipe` int NOT NULL,
+	`poe_ponto` int NOT NULL,
+	PRIMARY KEY (`poe_idpontosequipe`)
 );
 
-CREATE TABLE TB_Pontos_Equipe (
-    poe_idPontosEquipe INT NOT NULL PRIMARY KEY,
-    par_idPartida INT NOT NULL,
-    equ_idEquipe INT NOT NULL,
-    poe_ponto INT NOT NULL,
-    FOREIGN KEY(par_idPartida)
-        REFERENCES TB_Partida(par_idPartida)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(equ_idEquipe)
-        REFERENCES TB_Equipe(equ_idEquipe)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_ponto_jogador` (
+	`pjo_idpontojog` int NOT NULL AUTO_INCREMENT,
+	`par_idpartida` int NOT NULL,
+	`rat_idregraatributo` int NOT NULL,
+	`jog_idjogador` int NOT NULL,
+	`pjo_qtde` int NOT NULL,
+	`pjo_pontostotais` int NOT NULL,
+	PRIMARY KEY (`pjo_idpontojog`)
 );
 
-CREATE TABLE TB_Ponto_Jogador(
-    pjo_idPontoJog INT NOT NULL PRIMARY KEY,
-    par_idPartida INT NOT NULL,
-    rat_idRegraAtributo INT NOT NULL,
-    jog_idJogador INT NOT NULL,
-    pjo_Qtde INT NOT NULL,
-    pjo_pontosTotais INT NOT NULL,
-    FOREIGN KEY(par_idPartida)
-        REFERENCES TB_Partida(par_idPartida)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(rat_idRegraAtributo)
-        REFERENCES TB_Regra_Atributo(rat_idRegraAtributo)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(jog_idJogador)
-        REFERENCES TB_Jogador(jog_idJogador)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-
+CREATE TABLE `tb_partida` (
+	`par_idpartida` int NOT NULL AUTO_INCREMENT,
+	`fas_idfase` int NOT NULL,
+	`par_data` DATETIME NOT NULL,
+	PRIMARY KEY (`par_idpartida`)
 );
 
-CREATE TABLE TB_Palpite(
-    pal_idPalpite INT NOT NULL PRIMARY KEY,
-    usu_idUsuario INT NOT NULL,
-    FOREIGN KEY(usu_idUsuario)
-        REFERENCES TB_Usuario(usu_idUsuario)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+CREATE TABLE `tb_fase` (
+	`fas_idfase` int NOT NULL AUTO_INCREMENT,
+	`cam_idcampeonato` int NOT NULL,
+	`fas_nome` varchar(100) NOT NULL,
+	`fas_posicao` int NOT NULL,
+	PRIMARY KEY (`fas_idfase`)
 );
 
-CREATE TABLE TB_Palpite_no_Jogador(
-    pnj_idPalpiteJog INT NOT NULL PRIMARY KEY,
-    jog_idJogador INT NOT NULL,
-    par_idPartida INT NOT NULL,
-    pal_idPalpite INT NOT NULL,
-    rat_idRegraAtributo INT NOT NULL,
-    pnj_qtdeAtributo INT NOT NULL,
-    pnj_pontosTotais INT NOT NULL,
-    FOREIGN KEY(pal_idPalpite)
-        REFERENCES TB_Palpite(pal_idPalpite)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(rat_idRegraAtributo)
-        REFERENCES TB_Regra_Atributo(rat_idRegraAtributo)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(jog_idJogador)
-        REFERENCES TB_Jogador(jog_idJogador)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    FOREIGN KEY(par_idPartida)
-        REFERENCES TB_Partida(par_idPartida)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
+ALTER TABLE `tb_jogador` ADD CONSTRAINT `tb_jogador_fk0` FOREIGN KEY (`usu_idusuario`) REFERENCES `tb_usuario`(`usu_idusuario`);
+
+ALTER TABLE `tb_equipe` ADD CONSTRAINT `tb_equipe_fk0` FOREIGN KEY (`usu_idusuario`) REFERENCES `tb_usuario`(`usu_idusuario`);
+
+ALTER TABLE `tb_jogador_da_equipe` ADD CONSTRAINT `tb_jogador_da_equipe_fk0` FOREIGN KEY (`jog_idjogador`) REFERENCES `tb_jogador`(`jog_idjogador`);
+
+ALTER TABLE `tb_jogador_da_equipe` ADD CONSTRAINT `tb_jogador_da_equipe_fk1` FOREIGN KEY (`equ_idEquipe`) REFERENCES `tb_equipe`(`equ_idequipe`);
+
+ALTER TABLE `tb_regra` ADD CONSTRAINT `tb_regra_fk0` FOREIGN KEY (`usu_idusuario`) REFERENCES `tb_usuario`(`usu_idusuario`);
+
+ALTER TABLE `tb_regra_atributo` ADD CONSTRAINT `tb_regra_atributo_fk0` FOREIGN KEY (`reg_idregra`) REFERENCES `tb_regra`(`reg_idregra`);
+
+ALTER TABLE `tb_campeonato` ADD CONSTRAINT `tb_campeonato_fk0` FOREIGN KEY (`usu_idusuario`) REFERENCES `tb_usuario`(`usu_idusuario`);
+
+ALTER TABLE `tb_campeonato` ADD CONSTRAINT `tb_campeonato_fk1` FOREIGN KEY (`reg_idregra`) REFERENCES `tb_regra`(`reg_idregra`);
+
+ALTER TABLE `tb_equipe_do_campeonato` ADD CONSTRAINT `tb_equipe_do_campeonato_fk0` FOREIGN KEY (`equ_idequipe`) REFERENCES `tb_equipe`(`equ_idequipe`);
+
+ALTER TABLE `tb_equipe_do_campeonato` ADD CONSTRAINT `tb_equipe_do_campeonato_fk1` FOREIGN KEY (`cam_idcampeonato`) REFERENCES `tb_campeonato`(`cam_idcampeonato`);
+
+ALTER TABLE `tb_pontos_equipe` ADD CONSTRAINT `tb_pontos_equipe_fk0` FOREIGN KEY (`par_idpartida`) REFERENCES `tb_partida`(`par_idpartida`);
+
+ALTER TABLE `tb_pontos_equipe` ADD CONSTRAINT `tb_pontos_equipe_fk1` FOREIGN KEY (`equ_idequipe`) REFERENCES `tb_equipe`(`equ_idequipe`);
+
+ALTER TABLE `tb_ponto_jogador` ADD CONSTRAINT `tb_ponto_jogador_fk0` FOREIGN KEY (`par_idpartida`) REFERENCES `tb_partida`(`par_idpartida`);
+
+ALTER TABLE `tb_ponto_jogador` ADD CONSTRAINT `tb_ponto_jogador_fk1` FOREIGN KEY (`rat_idregraatributo`) REFERENCES `tb_regra_atributo`(`rat_idregraatributo`);
+
+ALTER TABLE `tb_ponto_jogador` ADD CONSTRAINT `tb_ponto_jogador_fk2` FOREIGN KEY (`jog_idjogador`) REFERENCES `tb_jogador`(`jog_idjogador`);
+
+ALTER TABLE `tb_partida` ADD CONSTRAINT `tb_partida_fk0` FOREIGN KEY (`fas_idfase`) REFERENCES `tb_fase`(`fas_idfase`);
+
+ALTER TABLE `tb_fase` ADD CONSTRAINT `tb_fase_fk0` FOREIGN KEY (`cam_idcampeonato`) REFERENCES `tb_campeonato`(`cam_idcampeonato`);

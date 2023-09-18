@@ -1,9 +1,15 @@
 <script>
     export let texto;
     export let ref;
+    export let tipo = "button";
+    export let onClick = () => {};
+    export let link = null;
 </script>
-
-<button {ref} class="btn-butao" type="button">{texto}</button>
+{#if !link}
+    <button {ref} class="btn-butao" type={tipo} on:click={onClick}>{texto}</button>
+{:else}
+    <a {ref} href={link} class="btn-butao">{texto}</a>
+{/if}
 
 <style>
     .btn-butao{
@@ -15,6 +21,7 @@
         border-radius: 0.5rem;
         border-color: var(--tertiary-color);
         border-style: none;
+        text-decoration: none;
     }
 
     .btn-butao:hover{
