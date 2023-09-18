@@ -20,6 +20,10 @@
        
 }
 
+.flex {
+    display: flex;
+}
+
 .title-button{
     display: flex;
     align-items: center;
@@ -46,7 +50,12 @@
     width: 100%
     
 }
-
+.section {
+    padding: 20px;
+}
+.input-block {
+    display: block;
+}
 .input-border{
     border: none;
     border-bottom: 2px solid var(--highlight-color);

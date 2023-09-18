@@ -138,9 +138,7 @@
     }
     /* ================================== */
 
-    .section {
-        padding: 20px;
-    }
+
     /* CARD  */
     .card-container {
         display: flex;
