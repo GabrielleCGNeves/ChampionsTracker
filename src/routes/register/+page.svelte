@@ -14,20 +14,21 @@
         </div>
     </div> -->
     
-    <form action="POST" class="forms">
+    <form method="POST" class="forms" >
 
-        <input type="text" class="input" name="name" placeholder="Nome">
+        <input type="text" class="input" name="usu_nome" placeholder="Nome">
         <br>
-        <input type="text" class="input" name="username" placeholder="Apelido">
+        <input type="text" class="input" name="usu_apelido" placeholder="Apelido">
         <br>
-        <input type="text" class="input" name="email" placeholder="Email">
+        <input type="text" class="input" name="usu_email" placeholder="Email">
         <br>
-        <input type="password" class="input" name="pass" placeholder="Senha">
+        <input type="password" class="input" name="password" placeholder="Senha">
+        <br>
+        <br>
+        <Butao ref="confirmar" texto={"REGISTRAR"} tipo="submit" />
     </form>
     
-    <br>
     
-    <Butao ref="confirmar" texto={"REGISTRAR"} />
 </main>
 
 <style>
