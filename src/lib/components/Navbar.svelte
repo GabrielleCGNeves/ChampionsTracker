@@ -1,5 +1,5 @@
 <script>
-
+    import { page } from '$app/stores'
 </script>
 
 <nav class="navbar">
@@ -34,6 +34,7 @@
             </a>
         </li> -->
 
+        {#if !$page.data.user}
         <li class="nav-item">
             <a href="/login" class="nav-link">
                 <svg viewBox="0 0 52 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -47,8 +48,24 @@
                 </div>
             </a>
         </li>
+        {/if}
+        <!-- {#if $page.data.user}
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/logout" class="nav-link">
+                <svg viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path class="svg-color" d="m497 273-168 168c-15 15-41 4.5-41-17v-96h-136c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136v-96c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zm-305 163v-40c0-6.6-5.4-12-12-12h-84c-17.7 0-32-14.3-32-32v-192c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-84c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/></svg>
+                    
+                <div class="link-desc">
+                    <span class="link-title">Logout</span>
+                    <br>
+                    <span class="link-text">Lorem</span>
+                </div>
+            </a>
+        </li>
+        {/if} -->
+
+        <li class="nav-item">
+            <a href="/" class="nav-link">
                 <svg viewBox="0 0 59 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path class="svg-color" d="M58.1976 51.018L46.7079 39.5283C46.1893 39.0097 45.4863 38.7216 44.7488 38.7216H42.8703C46.051 34.6535 47.941 29.5367 47.941 23.9705C47.941 10.7291 37.2119 0 23.9705 0C10.7291 0 0 10.7291 0 23.9705C0 37.2119 10.7291 47.941 23.9705 47.941C29.5367 47.941 34.6535 46.051 38.7216 42.8703V44.7488C38.7216 45.4863 39.0097 46.1893 39.5283 46.7079L51.018 58.1976C52.1013 59.2809 53.853 59.2809 54.9247 58.1976L58.1861 54.9362C59.2694 53.853 59.2694 52.1013 58.1976 51.018ZM23.9705 38.7216C15.8228 38.7216 9.21942 32.1297 9.21942 23.9705C9.21942 15.8228 15.8113 9.21942 23.9705 9.21942C32.1182 9.21942 38.7216 15.8113 38.7216 23.9705C38.7216 32.1182 32.1297 38.7216 23.9705 38.7216Z"/>
                     </svg>
@@ -60,7 +77,7 @@
                 </div>
             </a>
         </li>
-
+        {#if $page.data.user}
         <li class="nav-item">
             <a href="/team" class="nav-link">
                 <svg viewBox="0 0 52 52" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,6 +105,7 @@
                 </div>
             </a>
         </li>
+        {/if}
 
         <!-- Removido dois elementos -->
         <!-- <li class="nav-item">
