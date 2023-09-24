@@ -1,7 +1,9 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import Card from "../lib/components/Card.svelte";
+    import { page } from '$app/stores'
 
+    
     const card = [
         {
             image: "https://s2-ge.glbimg.com/PqYBNkb90VdSg422I8Lb1fthGEE=/0x0:920x518/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2021/B/B/oEivukQZ6J4Ra6qVg9hQ/league-of-legends-campeoes-divulgacao-riot-games.jpg",
@@ -28,11 +30,19 @@
             players: 10,
         },
     ];
-
-    const autheticated = true;
 </script>
 
 <main class="main-content">
+    {#if $page.data.user}
+    <div class="section">
+        <div class="title-button">
+            <h1 class="title">Bem Vindo {$page.data.user.username}!</h1>
+            <form action="/logout" method="post">
+                <Butao tipo="submit" ref="seeMore" texto={"LOGOUT"} />
+            </form>
+        </div>
+    </div>
+    {/if}
     <div class="section">
         <div class="faixa-destaque" />
     </div>
@@ -47,7 +57,7 @@
             {/each}
         </div>
     </div>
-    {#if autheticated}
+    {#if $page.data.user}
     <div class="section">
         <div class="title-button">
             <h1 class="title">Seus Jogos</h1>
