@@ -20,6 +20,10 @@
        
 }
 
+main {
+    margin-left: 7rem;
+}
+
 .flex {
     display: flex;
 }
@@ -107,5 +111,8 @@ body::-webkit-scrollbar-thumb{
         width: auto;
         margin: 0 1rem;
         overflow-x: hidden;
+    }
+    main {
+        margin-left: 0;
     }
 }
