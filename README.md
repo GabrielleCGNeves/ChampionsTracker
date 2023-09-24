@@ -45,20 +45,49 @@
 ## Desenvolvendo localmente 👨‍💻
 Primeiramente você precisará ter o [Node](https://nodejs.org) instalado em sua máquina
 
-A aplicação se utiliza do [Pocketbase](https://pocketbase.io) como backend, realize o download e o inicialize utilizando o comando `./pocketbase serve`, seguindo sua documentação
+Utilize as extensões recomendadas para o [vscode](https://vscode.dev)
+- [Svelte Bundle](https://marketplace.visualstudio.com/items?itemName=1YiB.svelte-bundle)
+- [Vite](https://marketplace.visualstudio.com/items?itemName=antfu.vite)
+- [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
 
 Após isso realize o passo-a-passo:
 
-1. Clone o repositório do Github
+1. Clone e acesse o repositório do Github
 ```bash
 git clone https://github.com/GabrielleCGNeves/ChampionsTracker.git
+
+cd ChampionsTracker
 ```
 
-1. Instalando dependências
+2. Instale as dependências
 ```bash
 npm install
 ```
-1. Inicialize o servidor local
+
+3. Crie um arquivo `.env` na raiz do projeto
+```bash
+touch .env
+```
+
+4. Faça o push do banco do Prisma localmente
+```bash
+npm run db:push
+```
+**ATENÇÃO:** é necessario a variável de [endereço de conexão](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgresql) no arquivo `.env`, conforme exemplo abaixo:
+```bash
+DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
+```
+Note que o projeto usa o **MySQL** como banco. O endereço de conexão padrão para o [XAMPP](https://www.apachefriends.org/pt_br/index.html) é:
+```bash
+DATABASE_URL="mysql://root:@localhost:3306/championsdev"
+```
+
+5. Gere seu cliente Prisma
+```bash
+npm run db:generate
+```
+
+6. Inicialize o servidor local
 ```bash
 npm run dev
 ```
