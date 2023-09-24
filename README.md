@@ -52,24 +52,24 @@ Utilize as extensões recomendadas para o [vscode](https://vscode.dev)
 
 Após isso realize o passo-a-passo:
 
-1. Clone e acesse o repositório do Github
+### 1. Clone e acesse o repositório do Github
 ```bash
 git clone https://github.com/GabrielleCGNeves/ChampionsTracker.git
 
 cd ChampionsTracker
 ```
 
-2. Instale as dependências
+### 2. Instale as dependências
 ```bash
 npm install
 ```
 
-3. Crie um arquivo `.env` na raiz do projeto
+### 3. Crie um arquivo `.env` na raiz do projeto
 ```bash
 touch .env
 ```
 
-4. Faça o push do banco do Prisma localmente
+### 4. Faça o push do banco do Prisma localmente
 ```bash
 npm run db:push
 ```
@@ -82,12 +82,12 @@ Note que o projeto usa o **MySQL** como banco. O endereço de conexão padrão p
 DATABASE_URL="mysql://root:@localhost:3306/championsdev"
 ```
 
-5. Gere seu cliente Prisma
+### 5. Gere seu cliente Prisma
 ```bash
 npm run db:generate
 ```
 
-6. Inicialize o servidor local
+### 6. Inicialize o servidor local
 ```bash
 npm run dev
 ```
