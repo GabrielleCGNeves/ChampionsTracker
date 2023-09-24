@@ -1,14 +1,12 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import CardTeam from "$lib/components/CardTeam.svelte";
-    import Carousel from "svelte-carousel";
     import Modal from "$lib/components/Modal.svelte";
+    import { page } from '$app/stores'
 
     export let data;
 
     $: ({ equipes } = data);
-
-    console.log(equipes);
 </script>
 
 <div class="main-content">
@@ -19,7 +17,9 @@
         </div>
         <div class="flex">
             {#each equipes as equipe}
-                <CardTeam nJogadores={equipe.equ_numjogadores} titulo={equipe.equ_nome} equipe={equipe}/>
+                {#if equipe.usu_idusuario === $page.data.user.id}
+                    <CardTeam nJogadores={equipe.equ_numjogadores} titulo={equipe.equ_nome} equipe={equipe}/>
+                {/if}
             {/each}
         </div>
     </div>

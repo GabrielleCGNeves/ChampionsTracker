@@ -1,7 +1,12 @@
 import { prisma } from "$lib/server/prisma";
-import { fail } from "@sveltejs/kit"
+import { fail, redirect } from "@sveltejs/kit"
 
-export const load = async () => {
+export const load = async ( { locals } ) => {
+
+    if (!locals.user) {
+        throw redirect(302, '/')
+    }
+
     return {
         equipes: await prisma.tb_equipe.findMany()
     }
