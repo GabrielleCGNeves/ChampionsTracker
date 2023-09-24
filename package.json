@@ -6,7 +6,9 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"host": "vite --host"
+		"host": "vite --host",
+		"db:push": "prisma db push",
+		"db:generate": "prisma generate"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
