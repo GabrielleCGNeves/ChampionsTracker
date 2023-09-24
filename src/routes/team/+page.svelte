@@ -4,17 +4,8 @@
     import { open_modal } from "./modal.js";
     
     let receivedImage = "";
-    
-    // import Modal from "$lib/components/Modal.svelte";
-    // let isModalOpen = false;
+    export let form;
 
-    // function openModal() {
-    //     isModalOpen = true;
-    // }
-
-    // function closeModal() {
-    //     isModalOpen = false;
-    // }
 </script>
 <main class="main-content">
     <p class="page-title">CADASTRO</p>
@@ -26,6 +17,8 @@
 
     <br />
     <br />
+
+    
 
     <form action="?/createTeam" method="POST" class="forms">
         <div class="flex">
@@ -96,11 +89,7 @@
         
         <Butao ref="save" texto={"SALVAR"} tipo="submit" />
     </form>
-    
-    <!-- <button on:click={openModal}>Abrir Modal</button>
-    <Modal bind:isOpen={isModalOpen} title="Meu Modal" close={closeModal}>
-        <p>Conteúdo do modal aqui.</p>
-    </Modal> -->
+
 </main>
 
 <style>
