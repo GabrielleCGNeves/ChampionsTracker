@@ -2,9 +2,9 @@ import { prisma } from '$lib/server/prisma'
 import { fail } from "@sveltejs/kit"
 
 export const actions = {
-    createTeam: async ({ request }) => {
+    createTeam: async ({ locals, request }) => {
         const data = await request.formData()
-        // console.log("🚀 ~ file: +page.server.js:7 ~ createTeam: ~ data:", data)
+        console.log("🚀 ~ file: +page.server.js:7 ~ createTeam: ~ data:", data)
         const name = data.get("teamName")
         const number = parseInt(data.get("teamNumber"))
         const description = data.get("teamDescription")
@@ -14,7 +14,7 @@ export const actions = {
         try {
             await prisma.tb_equipe.create({
                 data: {
-                    usu_idusuario: 1,
+                    usu_idusuario: locals.user.id,
                     equ_nome: name,
                     equ_numjogadores: number,
                     equ_desc: description,
