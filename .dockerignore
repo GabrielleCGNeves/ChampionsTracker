@@ -1,0 +1,8 @@
+/*
+!/src
+!/static
+!/prisma
+!package-lock.json
+!package.json
+!svelte.config.js
+!vite.config.js
