@@ -13,7 +13,7 @@ model tb_usuario {
   usu_nome            String
   usu_passwordHash    String
   usu_authToken       String          @unique
-  usu_apelido         String
+  usu_apelido         String          @unique
   usu_foto            String
   usu_pontostotais    Int             @default(0)
   usu_dataCriacao     DateTime        @default(now())
