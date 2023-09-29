@@ -1,7 +1,9 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
-    import { open_modal } from "./modal.js";
+    import Modal from "../../lib/components/Modal.svelte";
+    
+    let showModal = false;
     
     let receivedImage = "";
     export let form;
@@ -43,14 +45,20 @@
 
         <br />
 
-        <!-- <div class="grid-container">
+        <div class="grid-player">
             <Butao
                 ref="player"
-                on:click={open_modal}
+                onClick={() => showModal = true}
                 texto={"ADICIONAR JOGADORES"}
             />
-            <input type="text" class="input input-player" name="idPlayer" />
-        </div> -->
+                <input type="text" class="input input-player" name="idPlayer" />
+            
+        </div>
+
+        <Modal bind:showModal>
+            <h1 slot="header">Criar Jogador</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi modi perspiciatis tempore debitis autem consequatur dicta corrupti recusandae eveniet, est consequuntur labore ipsam accusantium, hic facere pariatur molestias suscipit eligendi.</p>
+        </Modal>
 
         <br />
 
@@ -63,29 +71,6 @@
         />
 
         <br />
-
-        <!-- Modal Start -->
-        <!-- <div class="modal-container" id="modal-visibility">
-            <div class="modal">
-                <div class="modal-header grid-container">
-                    <a href="">Adicionar Jogador</a>
-                </div>
-                <div class="modal-content">
-                    <p class="text">Adicione um jogador caso o mesmo não possua uma conta</p>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="modal-container" id="modal-visibility">
-            <div class="modal">
-                <div class="modal-header grid-container">
-                    <a href="">Adicionar Jogador</a>
-                </div>
-                <div class="modal-content">
-                    <p class="text">Adicione um jogador caso o mesmo não possua uma conta</p>
-                </div>
-            </div>
-        </div> -->
-        <!-- Modal End -->
         
         <Butao ref="save" texto={"SALVAR"} tipo="submit" />
     </form>
@@ -93,6 +78,12 @@
 </main>
 
 <style>
+    .grid-player{
+        align-items: center;
+        display: flex;
+        gap: 1rem;
+    }
+
     .flex {
         align-items: center;
     }
@@ -100,9 +91,10 @@
         width: 16rem;
         margin-top: 0;
     }
-    /* .input-player {
-        width: 57%;
-    } */
+    .input-player {
+        margin: 0;
+        width: 100%;
+    }
 
     .input-number {
         width: 10%;
@@ -124,7 +116,7 @@
     }
     :global([ref="player"]) {
         background-color: var(--tertiary-color);
-        width: 10rem;
+        width: 15rem;
     }
     :global([ref="save"]) {
         background-color: var(--tertiary-color);
