@@ -11,9 +11,9 @@ export const load = async ({ locals, params }) => {
     // Define an async function to get the team information
     const getTeam = async () => {
         // Retrieve the team from the database based on the team ID
-        const team = await prisma.tb_equipe.findUnique({
+        const team = await prisma.Equipe.findUnique({
             where: {
-                equ_idequipe: Number(params.teamid)
+                id: Number(params.teamid)
             }
         })
 
@@ -23,7 +23,7 @@ export const load = async ({ locals, params }) => {
         }
 
         // Check if the user's ID is not equal to the team's user ID
-        if (locals.user.id != team.usu_idusuario) {
+        if (locals.user.id != team.usuarioId) {
             // If it's not equal, throw a 403 error with the message 'Acesso não autorizado'
             throw error(403, 'Acesso não autorizado');
         }
@@ -48,15 +48,15 @@ export const actions = {
 
 
         try {
-            await prisma.tb_equipe.update({
+            await prisma.Equipe.update({
                 where: {
-                    equ_idequipe: Number(params.teamid)
+                    id: Number(params.teamid)
                 },
                 data: {
-                    equ_nome: name,
-                    equ_numjogadores: number,
-                    equ_desc: description,
-                    equ_foto: image,
+                    nome: name,
+                    numeroJogadores: number,
+                    descricao: description,
+                    foto: image,
                 }
             })
         } catch (error) {

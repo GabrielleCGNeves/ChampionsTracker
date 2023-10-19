@@ -8,7 +8,7 @@ export const load = async ( { locals } ) => {
     }
 
     return {
-        equipes: await prisma.tb_equipe.findMany()
+        equipes: await prisma.Equipe.findMany()
     }
 }
 
@@ -20,9 +20,9 @@ export const actions = {
         }
 
         try {
-            await prisma.tb_equipe.delete({
+            await prisma.Equipe.delete({
                 where: {
-                    equ_idequipe: Number(id)
+                    id: Number(id)
                 }
             })
         } catch (error) {

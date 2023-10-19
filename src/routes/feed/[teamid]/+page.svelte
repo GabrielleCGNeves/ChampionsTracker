@@ -10,7 +10,7 @@
     
 </script>
 <main class="main-content">
-    <p class="page-title">Editando {equipe.equ_nome}</p>
+    <p class="page-title">Editando {equipe.nome}</p>
 
     <br />
     <br />
@@ -23,7 +23,7 @@
                     class="input-name input-border input-block"
                     name="teamName"
                     placeholder="Nome da Equipe"
-                    value={equipe.equ_nome}
+                    value={equipe.nome}
                 />
         
                 <label for="">Nº de Jogadores</label>
@@ -31,7 +31,7 @@
                     type="number"
                     class="input-border input-number"
                     name="teamNumber"
-                    value={equipe.equ_numjogadores}
+                    value={equipe.numeroJogadores}
                 />
             </div>
             <ImageUploader on:message={e => receivedImage = e.detail}/>
@@ -57,7 +57,7 @@
             cols="70"
             rows="10"
             placeholder="Descrição"
-            value={equipe.equ_desc}
+            value={equipe.descricao}
         />
 
         <br />

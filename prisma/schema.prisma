@@ -7,165 +7,157 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tb_usuario {
-  usu_idUsuario       Int             @id @default(autoincrement())
-  usu_email           String          @unique
-  usu_nome            String
-  usu_passwordHash    String
-  usu_authToken       String          @unique
-  usu_apelido         String          @unique
-  usu_foto            String
-  usu_pontostotais    Int             @default(0)
-  usu_dataCriacao     DateTime        @default(now())
-  usu_dataAtualizacao DateTime        @updatedAt
-  tb_campeonato       tb_campeonato[]
-  tb_equipe           tb_equipe[]
-  tb_jogador          tb_jogador[]
-  tb_regra            tb_regra[]
+model Usuario {
+  id              Int          @id @default(autoincrement()) @map("usu_idUsuario")
+  email           String       @unique @map("usu_email")
+  nome            String       @map("usu_nome")
+  passwordHash    String       @map("usu_passwordHash")
+  authToken       String       @unique @map("usu_authToken")
+  apelido         String       @unique @map("usu_apelido")
+  foto            String       @map("usu_foto")
+  role            String       @default("user") @map("usu_role")
+  pontosTotais    Int          @default(0) @map("usu_pontostotais")
+  dataCriacao     DateTime     @default(now()) @map("usu_dataCriacao")
+  dataAtualizacao DateTime     @updatedAt @map("usu_dataAtualizacao")
+  campeonatos     Campeonato[]
+  equipes         Equipe[]
+  jogadores       Jogador[]
+  regras          Regra[]
+
+  @@map("tb_usuario")
 }
 
-model tb_campeonato {
-  cam_idcampeonato        Int                       @id @default(autoincrement())
-  usu_idusuario           Int
-  reg_idregra             Int
-  cam_nome                String                    @db.VarChar(100)
-  cam_foto                String                    @db.VarChar(255)
-  cam_desc                String                    @db.VarChar(500)
-  cam_status              String                    @db.VarChar(50)
-  tb_usuario              tb_usuario                @relation(fields: [usu_idusuario], references: [usu_idUsuario], onUpdate: Restrict)
-  tb_regra                tb_regra                  @relation(fields: [reg_idregra], references: [reg_idregra], onUpdate: Restrict)
-  tb_equipe_do_campeonato tb_equipe_do_campeonato[] @ignore
-  tb_fase                 tb_fase[]
+model Campeonato {
+  id                 Int                  @id @default(autoincrement()) @map("cam_idcampeonato")
+  usuarioId          Int                  @map("usu_idusuario")
+  regraId            Int                  @map("reg_idregra")
+  nome               String               @map("cam_nome")
+  foto               String               @map("cam_foto")
+  descricao          String               @map("cam_desc")
+  status             String               @map("cam_status")
+  usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
+  regra              Regra                @relation(fields: [regraId], references: [id], onUpdate: Restrict)
+  fases              Fase[]
+  EquipeDoCampeonato EquipeDoCampeonato[] 
 
-  @@index([usu_idusuario])
-  @@index([reg_idregra])
+  @@index([usuarioId])
+  @@index([regraId])
+  @@map("tb_campeonato")
 }
 
-model tb_equipe {
-  equ_idequipe            Int                       @id @default(autoincrement())
-  usu_idusuario           Int
-  equ_nome                String                    @db.VarChar(100)
-  equ_foto                String                    @db.VarChar(255)
-  equ_desc                String                    @db.VarChar(500)
-  equ_numjogadores        Int
-  equ_pontostotais        Int
-  tb_usuario              tb_usuario                @relation(fields: [usu_idusuario], references: [usu_idUsuario], onUpdate: Restrict)
-  tb_equipe_do_campeonato tb_equipe_do_campeonato[] @ignore
-  tb_jogador_da_equipe    tb_jogador_da_equipe[]    @ignore
-  tb_pontos_equipe        tb_pontos_equipe[]
+model Equipe {
+  id                 Int                  @id @default(autoincrement()) @map("equ_idequipe")
+  usuarioId          Int                  @map("usu_idusuario")
+  nome               String               @map("equ_nome")
+  foto               String               @map("equ_foto")
+  descricao          String               @map("equ_desc")
+  numeroJogadores    Int                  @map("equ_numjogadores")
+  pontosTotais       Int                  @map("equ_pontostotais")
+  usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
+  EquipeDoCampeonato EquipeDoCampeonato[] 
+  JogadorDaEquipe    JogadorDaEquipe[]    
 
-  @@index([usu_idusuario])
+  @@index([usuarioId])
+  @@map("tb_equipe")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model tb_equipe_do_campeonato {
-  equ_idequipe     Int
-  cam_idcampeonato Int
-  ec_vitoria       Int
-  ec_derrota       Int
-  ec_empate        Int
-  tb_equipe        tb_equipe     @relation(fields: [equ_idequipe], references: [equ_idequipe], onUpdate: Restrict)
-  tb_campeonato    tb_campeonato @relation(fields: [cam_idcampeonato], references: [cam_idcampeonato], onUpdate: Restrict)
+model Fase {
+  id           Int        @id @default(autoincrement()) @map("fas_idfase")
+  campeonatoId Int        @map("cam_idcampeonato")
+  nome         String     @map("fas_nome")
+  posicao      Int        @map("fas_posicao")
+  campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
+  partidas     Partida[]
 
-  @@index([equ_idequipe])
-  @@index([cam_idcampeonato])
-  @@ignore
+  @@index([campeonatoId])
+  @@map("tb_fase")
 }
 
-model tb_fase {
-  fas_idfase       Int           @id @default(autoincrement())
-  cam_idcampeonato Int
-  fas_nome         String        @db.VarChar(100)
-  fas_posicao      Int
-  tb_campeonato    tb_campeonato @relation(fields: [cam_idcampeonato], references: [cam_idcampeonato], onUpdate: Restrict)
-  tb_partida       tb_partida[]
+model Jogador {
+  id               Int               @id @default(autoincrement()) @map("jog_idjogador")
+  usuarioId        Int?              @map("usu_idusuario")
+  nome             String            @map("jog_nome")
+  apelido          String            @map("jog_apelido")
+  foto             String            @map("jog_foto")
+  pontosAcumulados Int               @map("jog_pontosacumulados")
+  usuario          Usuario?          @relation(fields: [usuarioId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  JogadorDaEquipe  JogadorDaEquipe[] 
 
-  @@index([cam_idcampeonato])
+  @@index([usuarioId])
+  @@map("tb_jogador")
 }
 
-model tb_jogador {
-  jog_idjogador        Int                    @id @default(autoincrement())
-  usu_idusuario        Int?
-  jog_nome             String                 @db.VarChar(100)
-  jog_apelido          String                 @db.VarChar(100)
-  jog_foto             String                 @db.VarChar(255)
-  jog_pontosacumulados Int
-  tb_usuario           tb_usuario?            @relation(fields: [usu_idusuario], references: [usu_idUsuario], onDelete: Restrict, onUpdate: Restrict)
-  tb_jogador_da_equipe tb_jogador_da_equipe[] @ignore
-  tb_ponto_jogador     tb_ponto_jogador[]
+model Partida {
+  id           Int            @id @default(autoincrement()) @map("par_idpartida")
+  faseId       Int            @map("fas_idfase")
+  data         DateTime       @map("par_data")
+  fase         Fase           @relation(fields: [faseId], references: [id], onUpdate: Restrict)
+  PontoJogador PontoJogador[]
 
-  @@index([usu_idusuario])
+  @@index([faseId])
+  @@map("tb_partida")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model tb_jogador_da_equipe {
-  jog_idjogador        Int
-  equ_idEquipe         Int
-  je_pontosindividuais Int
-  tb_jogador           tb_jogador @relation(fields: [jog_idjogador], references: [jog_idjogador], onUpdate: Restrict)
-  tb_equipe            tb_equipe  @relation(fields: [equ_idEquipe], references: [equ_idequipe], onUpdate: Restrict)
+model PontoJogador {
+  id              Int     @id @default(autoincrement()) @map("pjo_idpontojog")
+  partidaId       Int     @map("par_idpartida")
+  regraAtributoId Int     @map("rat_idregraatributo")
+  jogadorId       Int     @map("jog_idjogador")
+  quantidade      Int     @map("pjo_qtde")
+  pontosTotais    Int     @map("pjo_pontostotais")
+  partida         Partida @relation(fields: [partidaId], references: [id], onUpdate: Restrict)
 
-  @@index([jog_idjogador])
-  @@index([equ_idEquipe])
-  @@ignore
+  @@index([partidaId])
+  @@index([regraAtributoId])
+  @@index([jogadorId])
+  @@map("tb_ponto_jogador")
 }
 
-model tb_partida {
-  par_idpartida    Int                @id @default(autoincrement())
-  fas_idfase       Int
-  par_data         DateTime           @db.DateTime(0)
-  tb_fase          tb_fase            @relation(fields: [fas_idfase], references: [fas_idfase], onUpdate: Restrict)
-  tb_ponto_jogador tb_ponto_jogador[]
-  tb_pontos_equipe tb_pontos_equipe[]
+model Regra {
+  id            Int             @id @default(autoincrement()) @map("reg_idregra")
+  nome          String          @map("reg_nome")
+  usuarioId     Int             @map("usu_idusuario")
+  campeonatos   Campeonato[]
+  usuario       Usuario         @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
+  RegraAtributo RegraAtributo[]
 
-  @@index([fas_idfase])
+  @@index([usuarioId])
+  @@map("tb_regra")
 }
 
-model tb_ponto_jogador {
-  pjo_idpontojog      Int               @id @default(autoincrement())
-  par_idpartida       Int
-  rat_idregraatributo Int
-  jog_idjogador       Int
-  pjo_qtde            Int
-  pjo_pontostotais    Int
-  tb_partida          tb_partida        @relation(fields: [par_idpartida], references: [par_idpartida], onUpdate: Restrict)
-  tb_regra_atributo   tb_regra_atributo @relation(fields: [rat_idregraatributo], references: [rat_idregraatributo], onUpdate: Restrict)
-  tb_jogador          tb_jogador        @relation(fields: [jog_idjogador], references: [jog_idjogador], onUpdate: Restrict)
+model RegraAtributo {
+  id      Int    @id @default(autoincrement()) @map("rat_idregraatributo")
+  regraId Int    @map("reg_idregra")
+  nome    String @map("rat_nome")
+  pontos  Int    @map("rat_pontos")
+  regra   Regra  @relation(fields: [regraId], references: [id], onUpdate: Restrict)
 
-  @@index([par_idpartida])
-  @@index([rat_idregraatributo])
-  @@index([jog_idjogador])
+  @@index([regraId])
+  @@map("tb_regra_atributo")
 }
 
-model tb_pontos_equipe {
-  poe_idpontosequipe Int        @id @default(autoincrement())
-  par_idpartida      Int
-  equ_idequipe       Int
-  poe_ponto          Int
-  tb_partida         tb_partida @relation(fields: [par_idpartida], references: [par_idpartida], onUpdate: Restrict)
-  tb_equipe          tb_equipe  @relation(fields: [equ_idequipe], references: [equ_idequipe], onUpdate: Restrict)
+model EquipeDoCampeonato {
+  id           Int        @id @default(autoincrement()) @map("eqc_idEquipeCampeonato")
+  equipeId     Int        @map("eqc_idequipe")
+  campeonatoId Int        @map("eqc_idcampeonato")
+  pontosTotais Int        @map("eqc_pontostotais")
+  equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
+  campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
 
-  @@index([par_idpartida])
-  @@index([equ_idequipe])
+  @@index([equipeId])
+  @@index([campeonatoId])
+  @@map("tb_equipe_do_campeonato")
 }
 
-model tb_regra {
-  reg_idregra       Int                 @id @default(autoincrement())
-  usu_idusuario     Int
-  tb_campeonato     tb_campeonato[]
-  tb_usuario        tb_usuario          @relation(fields: [usu_idusuario], references: [usu_idUsuario], onUpdate: Restrict)
-  tb_regra_atributo tb_regra_atributo[]
+model JogadorDaEquipe {
+  id        Int     @id @default(autoincrement()) @map("jde_idJogadorEquipe")
+  jogadorId Int     @map("jde_idjogador")
+  equipeId  Int     @map("jde_idequipe")
+  pontos    Int     @map("jde_pontos")
+  jogador   Jogador @relation(fields: [jogadorId], references: [id], onUpdate: Restrict)
+  equipe    Equipe  @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
 
-  @@index([usu_idusuario])
-}
-
-model tb_regra_atributo {
-  rat_idregraatributo Int                @id @default(autoincrement())
-  reg_idregra         Int
-  rat_nome            Int
-  rat_pontos          Int
-  tb_ponto_jogador    tb_ponto_jogador[]
-  tb_regra            tb_regra           @relation(fields: [reg_idregra], references: [reg_idregra], onUpdate: Restrict)
-
-  @@index([reg_idregra])
+  @@index([jogadorId])
+  @@index([equipeId])
+  @@map("tb_jogador_da_equipe")
 }

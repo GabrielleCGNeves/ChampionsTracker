@@ -17,8 +17,8 @@
         </div>
         <div class="flex">
             {#each equipes as equipe}
-                {#if equipe.usu_idusuario === $page.data.user.id}
-                    <CardTeam nJogadores={equipe.equ_numjogadores} titulo={equipe.equ_nome} equipe={equipe}/>
+                {#if equipe.usuarioId === $page.data.user.id}
+                    <CardTeam nJogadores={equipe.numeroJogadores} titulo={equipe.nome} equipe={equipe}/>
                 {/if}
             {/each}
         </div>

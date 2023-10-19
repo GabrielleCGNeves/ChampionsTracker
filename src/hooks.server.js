@@ -10,23 +10,23 @@ export const handle = async ({ event, resolve }) => {
     }
   
     // find the user based on the session
-    const user = await prisma.tb_usuario.findUnique({
-      where: { usu_authToken: session },
+    const user = await prisma.Usuario.findUnique({
+      where: { authToken: session },
       select: { 
-        usu_apelido: true, 
-        usu_email: true, 
-        usu_foto: true, 
-        usu_idUsuario: true 
+        apelido: true, 
+        email: true, 
+        foto: true, 
+        id: true 
     },
     })
   
     // if `user` exists set `events.local`
     if (user) {
       event.locals.user = {
-        username: user.usu_apelido,
-        email: user.usu_email,
-        image: user.usu_foto,
-        id: user.usu_idUsuario
+        username: user.apelido,
+        email: user.email,
+        image: user.foto,
+        id: user.id
       }
     }
   

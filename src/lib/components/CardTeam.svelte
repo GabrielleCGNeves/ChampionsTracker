@@ -22,10 +22,10 @@
         <span>{nJogadores}</span>
     </div>
     <div class="card-attribute">
-        <form action="?/deleteTeam&id={equipe.equ_idequipe}" method="post">
+        <form action="?/deleteTeam&id={equipe.id}" method="post">
             <Butao ref="delete" texto="Deletar" tipo="submit"/>
         </form>
-        <Butao ref="edit" texto="Editar" tipo="button" link="./feed/{equipe.equ_idequipe}"/>
+        <Butao ref="edit" texto="Editar" tipo="button" link="./feed/{equipe.id}"/>
     </div>
 </div>
 

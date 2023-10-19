@@ -16,11 +16,11 @@
     
     <form method="POST" class="forms" >
 
-        <input type="text" class="input" name="usu_nome" placeholder="Nome">
+        <input type="text" class="input" name="nome" placeholder="Nome">
         <br>
-        <input type="text" class="input" name="usu_apelido" placeholder="Apelido">
+        <input type="text" class="input" name="apelido" placeholder="Apelido">
         <br>
-        <input type="text" class="input" name="usu_email" placeholder="Email">
+        <input type="text" class="input" name="email" placeholder="Email">
         <br>
         <input type="password" class="input" name="password" placeholder="Senha">
         <br>

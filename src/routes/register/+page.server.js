@@ -13,18 +13,18 @@ export const load = async ({ locals }) => {
 /** @type {import('./$types').Actions} */
 export const actions = {
     default: async ({ request }) => {
-        const { usu_nome, usu_apelido, usu_email, password } = Object.fromEntries(await request.formData())
+        const { nome, apelido, email, password } = Object.fromEntries(await request.formData())
 
         try {
-            await prisma.tb_usuario.create({
+            await prisma.Usuario.create({
                 data: {
-                    usu_nome,
-                    usu_apelido,
-                    usu_email,
-                    usu_passwordHash: await bcrypt.hash(password, 10),
-                    usu_foto: "https://placehold.co/200x200/png?text=Placeholder",
-                    usu_authToken: crypto.randomUUID(),
-                    usu_pontostotais: 0,
+                    nome,
+                    apelido,
+                    email,
+                    passwordHash: await bcrypt.hash(password, 10),
+                    foto: "https://placehold.co/200x200/png?text=Placeholder",
+                    authToken: crypto.randomUUID(),
+                    pontosTotais: 0,
                 }
             })
         } catch (err) {
