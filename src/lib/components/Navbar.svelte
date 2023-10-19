@@ -5,8 +5,8 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="./" class="nav-link">
-                <img src="trophy.png" alt="" srcset="">
+            <a href="/" class="nav-link">
+                <img src="/trophy.png" alt="" srcset="">
                     
                 <div class="link-desc">
                     <span class="link-title">Página Inicial</span>
@@ -79,7 +79,7 @@
         </li>
         {#if $page.data.user}
         <li class="nav-item">
-            <a href="/team" class="nav-link">
+            <a href="/team/create" class="nav-link">
                 <svg viewBox="0 0 52 52" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path class="svg-color" d="M48.0814 20.3421H31.4379V3.69857C31.4379 1.65627 29.7816 0 27.7393 0H24.0407C21.9984 0 20.3421 1.65627 20.3421 3.69857V20.3421H3.69857C1.65627 20.3421 0 21.9984 0 24.0407V27.7393C0 29.7816 1.65627 31.4379 3.69857 31.4379H20.3421V48.0814C20.3421 50.1237 21.9984 51.78 24.0407 51.78H27.7393C29.7816 51.78 31.4379 50.1237 31.4379 48.0814V31.4379H48.0814C50.1237 31.4379 51.78 29.7816 51.78 27.7393V24.0407C51.78 21.9984 50.1237 20.3421 48.0814 20.3421Z"/>
                     </svg>
