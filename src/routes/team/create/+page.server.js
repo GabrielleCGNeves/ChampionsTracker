@@ -12,14 +12,14 @@ export const actions = {
  
 
         try {
-            await prisma.tb_equipe.create({
+            await prisma.Equipe.create({
                 data: {
-                    usu_idusuario: locals.user.id,
-                    equ_nome: name,
-                    equ_numjogadores: number,
-                    equ_desc: description,
-                    equ_foto: image,
-                    equ_pontostotais: 0
+                    usuarioId: locals.user.id,
+                    nome: name,
+                    numeroJogadores: number,
+                    descricao: description,
+                    foto: image,
+                    pontosTotais: 0
                 }
             })
         } catch (error) {

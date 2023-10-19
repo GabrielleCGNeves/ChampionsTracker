@@ -1,9 +1,11 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
-    import Modal from "../../lib/components/Modal.svelte";
+    import Modal from "$lib/components/Modal.svelte";
     
     let showModal = false;
+
+  
     
     let receivedImage = "";
     export let form;
@@ -13,8 +15,8 @@
     <p class="page-title">CADASTRO</p>
 
     <div class="grid-container">
-        <Butao ref="team" texto={"EQUIPE"} />
-        <Butao ref="champion" texto={"CAMPEONATO"} />
+        <Butao ref="team" texto={"EQUIPE"} link="/team/create" />
+        <Butao ref="champion" texto={"CAMPEONATO"} link="/tournament/create" />
     </div>
 
     <br />
