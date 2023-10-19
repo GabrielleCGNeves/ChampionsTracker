@@ -4,6 +4,7 @@
 
 	let dialog; // HTMLDialogElement
 
+
 	$: if (dialog && showModal) dialog.showModal();
 
     
@@ -16,12 +17,14 @@
 	on:click|self={() => dialog.close()}
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="header">
-		<svg on:click={() => dialog.close()} class="closeButton" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M60 3.9622L56.0375 0L30 26.0375L3.96255 0L0 3.9622L26.0376 29.9998L0 56.0375L3.96255 59.9996L30 33.9622L56.0375 59.9996L60 56.0375L33.9624 29.9998L60 3.9622Z" fill="#76809D"/>
-		</svg>
-		<slot name="header" />
-	</div>
+	{#if $$slots.header}
+		<div class="header">
+			<svg on:click={() => dialog.close()} class="closeButton" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M60 3.9622L56.0375 0L30 26.0375L3.96255 0L0 3.9622L26.0376 29.9998L0 56.0375L3.96255 59.9996L30 33.9622L56.0375 59.9996L60 56.0375L33.9624 29.9998L60 3.9622Z" fill="#76809D"/>
+			</svg>
+			<slot name="header"/>
+		</div>
+	{/if}
 	<div on:click|stopPropagation>
 		<!-- <hr /> -->
 		<slot />
