@@ -68,19 +68,18 @@ npm install
 ```bash
 touch .env
 ```
-
-### 4. Faça o push do banco do Prisma localmente
-```bash
-npm run db:push
-```
-**ATENÇÃO:** é necessario a variável de [endereço de conexão](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgresql) no arquivo `.env`, conforme exemplo abaixo:
+Crie uma variável de [endereço de conexão](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgresql) no arquivo `.env`, conforme exemplo abaixo:
 ```bash
 DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
 ```
-Note que o projeto usa o **MySQL** como banco. O endereço de conexão padrão para o [XAMPP](https://www.apachefriends.org/pt_br/index.html) é:
+
+Se você utiliza o **XAMPP** basta renomear o arquivo `.env.example` para `.env` e ele funcionará perfeitamente
+
+### 4. Faça a migração do banco do Prisma
 ```bash
-DATABASE_URL="mysql://root:@localhost:3306/championsdev"
+npm run db:dev
 ```
+
 
 ### 5. Gere seu cliente Prisma
 ```bash
