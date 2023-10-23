@@ -12,7 +12,7 @@
 		"db:deploy": "prisma migrate deploy",
 		"db:dev": "prisma migrate dev",
 		"start:prod": "node -r dotenv/config build",
-		"start:migrate:prod": "prisma migrate deploy && npm run start:prod"
+		"start:migrate:prod": "npm run db:deploy && npm run start:prod"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
