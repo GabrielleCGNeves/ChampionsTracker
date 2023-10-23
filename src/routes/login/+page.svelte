@@ -27,7 +27,7 @@
             type="text"
             class="input"
             name="email"
-            placeholder="Nome de Usuário ou Email"
+            placeholder="Email"
         />
         <br />
         <input
