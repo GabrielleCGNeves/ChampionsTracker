@@ -5,6 +5,7 @@
     
 
     let imageUrl = null;
+    export let isLarge = false;
     let fileInput;
 
     function handleFileChange(event) {
@@ -20,7 +21,7 @@
     <img src={imageUrl} alt="Uploaded" width="120" height="120" />
 {:else}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="placeholder" on:click={() => fileInput.click()}>
+    <div class="normal placeholder" class:large={isLarge} on:click={() => fileInput.click()}>
         <input
             bind:this={fileInput}
             type="file"
@@ -33,8 +34,15 @@
 {/if}
 
 <style>
-    .placeholder {
+    .normal {
         width: 120px;
+    }
+
+    .large {
+        width: 350px;
+
+    }
+    .placeholder {
         height: 120px;
         background-color: var(--tertiary-color);
         border-radius: 20px;
