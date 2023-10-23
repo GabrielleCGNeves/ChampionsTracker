@@ -8,7 +8,16 @@ export const load = async ( { locals } ) => {
     }
 
     return {
-        equipes: await prisma.Equipe.findMany()
+        equipes: await prisma.Equipe.findMany({
+            where: {
+                usuarioId: locals.user.id
+            }
+        }),
+        campeonatos: await prisma.Campeonato.findMany({
+            where: {
+                usuarioId: locals.user.id
+            }
+        })
     }
 }
 
