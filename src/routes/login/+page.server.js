@@ -10,7 +10,7 @@ export const actions = {
         const user = await prisma.Usuario.findUnique({ where: { email: email } })
 
         if (!user) {
-            return fail(400, { credentials: true })
+            return fail(400, { invalid: true })
         }
 
         const userPassword = await bcrypt.compare(password, user.passwordHash)
