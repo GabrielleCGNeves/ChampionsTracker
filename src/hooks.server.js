@@ -16,7 +16,8 @@ export const handle = async ({ event, resolve }) => {
         apelido: true, 
         email: true, 
         foto: true, 
-        id: true 
+        id: true ,
+        role: true,
     },
     })
   
@@ -26,7 +27,8 @@ export const handle = async ({ event, resolve }) => {
         username: user.apelido,
         email: user.email,
         image: user.foto,
-        id: user.id
+        id: user.id,
+        role: user.role
       }
     }
   

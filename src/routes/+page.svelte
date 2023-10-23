@@ -36,7 +36,7 @@
     {#if $page.data.user}
     <div class="section">
         <div class="title-button">
-            <h1 class="title">Bem Vindo {$page.data.user.username}!</h1>
+            <h1 class="title">Bem Vindo <span class:admin-user={$page.data.user.role === "ADMIN"}>{$page.data.user.username}</span>!</h1>
             <form action="/logout" method="post">
                 <Butao tipo="submit" ref="seeMore" texto={"LOGOUT"} />
             </form>
@@ -111,6 +111,10 @@
 </main>
 
 <style>
+    .admin-user {
+        color: var(--gold-color);
+    }
+
     :global([ref="seeMore"]) {
         background-color: var(--tertiary-color);
     }
