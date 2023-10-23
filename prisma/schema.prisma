@@ -15,7 +15,7 @@ model Usuario {
   authToken       String       @unique @map("usu_authToken")
   apelido         String       @unique @map("usu_apelido")
   foto            String       @map("usu_foto")
-  role            String       @default("user") @map("usu_role")
+  role            Roles        @default(USER) @map("usu_role")
   pontosTotais    Int          @default(0) @map("usu_pontostotais")
   dataCriacao     DateTime     @default(now()) @map("usu_dataCriacao")
   dataAtualizacao DateTime     @updatedAt @map("usu_dataAtualizacao")
@@ -34,11 +34,12 @@ model Campeonato {
   nome               String               @map("cam_nome")
   foto               String               @map("cam_foto")
   descricao          String               @map("cam_desc")
-  status             String               @map("cam_status")
+  status             StatusCampeonato     @default(ATIVO) @map("cam_status")
+  tipo               TipoCampeonato       @default(VIRTUAL) @map("cam_tipo")
   usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
   regra              Regra                @relation(fields: [regraId], references: [id], onUpdate: Restrict)
   fases              Fase[]
-  EquipeDoCampeonato EquipeDoCampeonato[] 
+  EquipeDoCampeonato EquipeDoCampeonato[]
 
   @@index([usuarioId])
   @@index([regraId])
@@ -54,8 +55,8 @@ model Equipe {
   numeroJogadores    Int                  @map("equ_numjogadores")
   pontosTotais       Int                  @map("equ_pontostotais")
   usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
-  EquipeDoCampeonato EquipeDoCampeonato[] 
-  JogadorDaEquipe    JogadorDaEquipe[]    
+  EquipeDoCampeonato EquipeDoCampeonato[]
+  JogadorDaEquipe    JogadorDaEquipe[]
 
   @@index([usuarioId])
   @@map("tb_equipe")
@@ -81,7 +82,7 @@ model Jogador {
   foto             String            @map("jog_foto")
   pontosAcumulados Int               @map("jog_pontosacumulados")
   usuario          Usuario?          @relation(fields: [usuarioId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  JogadorDaEquipe  JogadorDaEquipe[] 
+  JogadorDaEquipe  JogadorDaEquipe[]
 
   @@index([usuarioId])
   @@map("tb_jogador")
@@ -160,4 +161,19 @@ model JogadorDaEquipe {
   @@index([jogadorId])
   @@index([equipeId])
   @@map("tb_jogador_da_equipe")
+}
+
+enum Roles {
+  USER
+  ADMIN
+}
+
+enum TipoCampeonato {
+  VIRTUAL
+  FISICO
+}
+
+enum StatusCampeonato {
+  ATIVO
+  INATIVO
 }
