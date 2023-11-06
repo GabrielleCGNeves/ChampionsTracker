@@ -25,7 +25,7 @@
         <form action="?/deleteTeam&id={equipe.id}" method="post">
             <Butao ref="delete" texto="Deletar" tipo="submit"/>
         </form>
-        <Butao ref="edit" texto="Editar" tipo="button" link="./feed/{equipe.id}"/>
+        <Butao ref="edit" texto="Editar" tipo="button" link="/team/update/{equipe.id}"/>
     </div>
 </div>
 

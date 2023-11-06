@@ -1,11 +1,11 @@
 import { prisma } from "$lib/server/prisma";
-import { error } from "@sveltejs/kit"
+import { error, redirect } from "@sveltejs/kit"
 
 export const load = async ({ locals, params }) => {
     // Check if the user is authenticated
     if (!locals.user) {
         // If not, throw a redirect exception to the home page
-        throw redirect(302, '/')
+        throw redirect(302, '/login')
     }
 
     // Define an async function to get the team information
