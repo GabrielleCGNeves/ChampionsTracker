@@ -5,7 +5,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/home" class="nav-link">
                 <img src="/trophy.png" alt="" srcset="">
                     
                 <div class="link-desc">
