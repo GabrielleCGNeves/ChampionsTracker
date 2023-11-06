@@ -5,7 +5,7 @@ import { page } from '$app/stores'
 </script>
 
 <div>
-    {#if  $page.url.pathname === '/tournament'}
+    {#if  $page.url.pathname === '/'}
     
         <main>
             <slot />
