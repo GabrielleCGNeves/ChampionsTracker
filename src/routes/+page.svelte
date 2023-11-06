@@ -54,7 +54,7 @@
         color: var(--text-color);        
     }
 
-    .register {
+    .register a{
         padding: 8px 15px;
         border: white 1px solid;
         border-radius: 10%;
