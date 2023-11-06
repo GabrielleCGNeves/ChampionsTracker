@@ -81,12 +81,7 @@ npm run db:dev
 ```
 
 
-### 5. Gere seu cliente Prisma
-```bash
-npm run db:generate
-```
-
-### 6. Inicialize o servidor local
+### 5. Inicialize o servidor local
 ```bash
 npm run dev
 ```
