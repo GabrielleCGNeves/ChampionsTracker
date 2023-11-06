@@ -27,7 +27,7 @@
         <img src="pernudo.svg" width="400" alt="">
     </section>
     
-    <section class="section background-one centered">
+    <section class="section background-alt centered">
         <div class="texto">
             <h3>Seu torneio suas regras</h3>
             <p>Controle e organize seus torneios em um só lugar, independente da modalidade ou estrutura. Decida quais vão ser as regras e atribua pontos para elas. Dê vida ao seu torneio seja ele público ou privado.</p>
@@ -38,7 +38,7 @@
         </div>
     </section>
     
-    <section class="section background-two">
+    <section class="section">
         <div class="texto">
             <h3>Participe de inúmeros torneios</h3>
             <p>Crie suas próprias equipes, atribua jogadores fora ou dentro da plataforma. Cadastre suas equipes em torneios e acompanhe seus resultados.</p>
@@ -47,7 +47,20 @@
     </section>
 </main>
 
+<footer>
+    Copyright 2023 &copy by Noobwire
+</footer>
+
 <style>
+    footer {
+        background-color: var(--tertiary-color);
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.438);
+        font-size: 0.75rem;
+    }
 
     .login a, .register a{
         text-decoration: none;
@@ -77,7 +90,7 @@
         background-color: var(--quaternary-color);
     }
 
-    .background-one {
+    .background-alt {
         background-color: var(--tertiary-color);
     }
 
@@ -88,6 +101,7 @@
         align-items: center;
         justify-content: center;
         gap: 50px;
+        flex-wrap: wrap;
     }
     
     .texto {
@@ -130,4 +144,12 @@
     /* .title > span {
         display: block;
     } */
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+    .section:first-child {
+        padding-top: 100px;
+    }
+    
+}
 </style>
