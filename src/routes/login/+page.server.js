@@ -38,6 +38,6 @@ export const actions = {
             maxAge: 60 * 60 * 24 * 30,
         })
 
-        throw redirect(302, '/')
+        throw redirect(302, '/home')
     }
 };

@@ -19,7 +19,7 @@ const userSchema = z.object({
 export const load = async ({ locals }, event) => {
     // redirect user if logged in
     if (locals.user) {
-        throw redirect(302, '/')
+        throw redirect(302, '/home')
     }
 
     const form = await superValidate(event, userSchema)
