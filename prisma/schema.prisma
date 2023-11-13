@@ -43,10 +43,23 @@ model Campeonato {
   regra              Regra                @relation(fields: [regraId], references: [id], onUpdate: Restrict)
   fases              Fase[]
   EquipeDoCampeonato EquipeDoCampeonato[]
+  PedidoCampeonato   PedidoCampeonato[]
 
   @@index([usuarioId])
   @@index([regraId])
   @@map("tb_campeonato")
+}
+
+model PedidoCampeonato {
+  id           Int        @id @default(autoincrement()) @map("pec_idpedidoCampeonato")
+  campeonatoId Int        @map("cam_idcampeonato")
+  equipeId     Int        @map("equ_idequipe")
+  dataPedido   DateTime   @default(now()) @map("pec_dataDoPedido")
+  campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
+  equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
+  @@index([campeonatoId])
+  @@index([equipeId])
+  @@map("tb_pedido_campeonato")
 }
 
 model Equipe {
@@ -60,6 +73,7 @@ model Equipe {
   usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
   EquipeDoCampeonato EquipeDoCampeonato[]
   JogadorDaEquipe    JogadorDaEquipe[]
+  PedidoCampeonato   PedidoCampeonato[]
 
   @@index([usuarioId])
   @@map("tb_equipe")
