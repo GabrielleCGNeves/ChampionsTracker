@@ -9,9 +9,11 @@
 </script>
 
 <div class="card">
-    <img
-        src={imagem} alt="Foto do Jogo 1"
-    />
+    <div class="image-wrapper">
+        <img
+            src={imagem} alt="Foto do Jogo 1"
+        />
+    </div>
     <h2>{titulo}</h2>
     <div class="card-attribute">
         <span>Vitórias</span>
@@ -70,5 +72,20 @@
             width: 100%; /* Ocupa a largura total da tela */
             margin-bottom: 20px; /* Espaçamento entre os cards */
         }
+
+    }
+
+    .image-wrapper {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+    }
+    .image-wrapper img {
+        
+        
+        height: 100%;
     }
 </style>
