@@ -22,6 +22,7 @@
                 <CardTeam
                     nJogadores={equipe.numeroJogadores}
                     titulo={equipe.nome}
+                    imagem="{equipe.foto}"
                     {equipe}
                 />
             {/each}
