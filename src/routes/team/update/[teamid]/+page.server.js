@@ -1,70 +1,74 @@
 import { prisma } from "$lib/server/prisma";
-import { error, redirect } from "@sveltejs/kit"
+import { fail, error, redirect } from "@sveltejs/kit"
+import { setError, superValidate } from "sveltekit-superforms/server";
+import { z } from "zod";    
+
+const schema = z.object({
+    nome: z.string().min(5, { message: "O nome deve ter pelo menos 5 caracteres" }),
+    numeroJogadores: z.number().min(1, { message: "A equipe deve ter pelo menos 1 jogador" }),
+    descricao: z.string(),
+})
 
 export const load = async ({ locals, params }) => {
-    // Check if the user is authenticated
+    
     if (!locals.user) {
-        // If not, throw a redirect exception to the home page
         throw redirect(302, '/login')
     }
 
-    // Define an async function to get the team information
-    const getTeam = async () => {
-        // Retrieve the team from the database based on the team ID
-        const team = await prisma.Equipe.findUnique({
-            where: {
-                id: Number(params.teamid)
-            }
-        })
 
-        // If the team is not found, throw an exception with a 404 status code
-        if (!team) {
-            throw error(404, 'Equipe não encontrada')
+    const team = await prisma.Equipe.findUnique({
+        where: {
+            id: Number(params.teamid)
         }
-
-        // Check if the user's ID is not equal to the team's user ID
-        if (locals.user.id != team.usuarioId) {
-            // If it's not equal, throw a 403 error with the message 'Acesso não autorizado'
-            throw error(403, 'Acesso não autorizado');
-        }
-
-        // Return the team information
-        return team
+    })
+    
+    if (!team) {
+        throw error(404, 'Equipe não encontrada')
     }
 
-    // Return an object with the team information
+    if (locals.user.id != team.usuarioId) {
+
+        throw error(403, 'Acesso não autorizado');
+    }
+
+
+    const form = await superValidate(team, schema)
+
     return {
-        equipe: getTeam(),
+        form
     }
 }
 
 export const actions = {
-    updateTeam: async ({ request, params }) => {
-        const data = await request.formData()
-        const name = data.get("teamName")
-        const number = parseInt(data.get("teamNumber"))
-        const description = data.get("teamDescription")
-        const image = data.get("image")
+    updateTeam: async (event) => {
+        const form = await superValidate(event, schema)
+        const { nome, numeroJogadores, descricao } = form.data
+        
+        if (!form.valid) {
+            return fail(400, { form })
+        }
 
+        if(await prisma.Equipe.findFirst({ where: { nome: nome }})) {
+            return setError(form, 'nome', 'Esta equipe já existe')
+        }
 
         try {
             await prisma.Equipe.update({
                 where: {
-                    id: Number(params.teamid)
+                    id: Number(event.params.teamid)
                 },
                 data: {
-                    nome: name,
-                    numeroJogadores: number,
-                    descricao: description,
-                    foto: image,
+                    nome,
+                    numeroJogadores,
+                    descricao,
+                    foto: `https://placehold.co/600x400/000000/FFFFFF/png?text=${nome.replace(/\s/g, '+')}`,
+                    pontosTotais: 0
                 }
             })
         } catch (error) {
             console.error(error);
             return fail(500, { message: "Não foi possível atualizar a equipe" })
         }
-        return {
-            status: 200,
-        }
+        throw redirect(302, '/feed')
     }
 };

@@ -2,29 +2,33 @@
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { superForm } from "sveltekit-superforms/client";
+    import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
     
     let showModal = false;
-
-  
     
     let receivedImage = "";
-    export let form;
+
+    export let data
+    const { form, enhance } = superForm(data.form, {
+        customValidity: true,
+        validators: data.validators
+    })
 
 </script>
 <main class="main-content">
     <p class="page-title">CADASTRO</p>
-
+    
     <div class="grid-container">
         <Butao ref="team" texto={"EQUIPE"} link="/team/create" />
         <Butao ref="champion" texto={"CAMPEONATO"} link="/tournament/create" />
     </div>
-
-    <br />
-    <br />
-
     
-
-    <form action="?/createTeam" method="POST" class="forms">
+    <br />
+    <br />
+    
+    
+    <form action="?/createTeam" method="POST" class="forms" use:enhance>
         <div class="flex">
             <div>
                 <input
@@ -32,6 +36,7 @@
                     class="input-name input-border input-block"
                     name="teamName"
                     placeholder="Nome da Equipe"
+                    bind:value={$form.teamName}
                 />
         
                 <label for="">Nº de Jogadores</label>
@@ -39,6 +44,8 @@
                     type="number"
                     class="input-border input-number"
                     name="teamNumber"
+                    min="1"
+                    bind:value={$form.teamNumber}
                 />
             </div>
             <ImageUploader on:message={e => receivedImage = e.detail}/>
@@ -70,6 +77,7 @@
             cols="70"
             rows="10"
             placeholder="Descrição"
+            bind:value={$form.teamDescription}
         />
 
         <br />

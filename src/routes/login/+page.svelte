@@ -1,6 +1,15 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
-    export let form
+    import { superForm } from "sveltekit-superforms/client";
+    import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
+
+    export let data
+    const { form, enhance } = superForm(data.form, {
+        customValidity: true,
+        validators: data.validators
+    })
+    
+
 </script>
 
 <main class="main-content">
@@ -15,30 +24,17 @@
         </div>
     </div> -->
 
-    <form method="POST" class="forms">
-        {#if form?.invalid}
-            <p class="error">Email e senha são obrigatórios</p>
-        {/if}
+    <!-- <SuperDebug data={$form} /> -->
 
-        {#if form?.credentials}
-            <p class="error">Email ou senha incorretos</p>
-        {/if}
-        <input
-            type="text"
-            class="input"
-            name="email"
-            placeholder="Email"
-        />
+    <form method="POST" class="forms" use:enhance>
+
+        <input type="text" class="input" name="email" placeholder="Email" bind:value={$form.email}>
         <br />
-        <input
-            type="password"
-            class="input"
-            name="password"
-            placeholder="Senha"
-        />
+        <input type="password" class="input" name="password" placeholder="Senha" bind:value={$form.password}>
+        <br />
         <br />
         <div class="div">
-            <input type="checkbox" name="rememberMe" />
+            <input type="checkbox" name="rememberMe"/>
             <label for="" class="details">Lembrar minha senha</label>
         </div>
         <br />
@@ -50,9 +46,7 @@
 </main>
 
 <style>
-    .error {
-        color: red;
-    }
+
     .link {
         color: var(--gold-color);
     }

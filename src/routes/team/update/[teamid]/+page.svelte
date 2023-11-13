@@ -1,16 +1,23 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
+    import { superForm } from "sveltekit-superforms/client";
+    import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
     
     let receivedImage = "";
 
     export let data
 
-    $: ({ equipe } = data);
+    // $: ({ equipe } = data);
+
+    const { form, enhance } = superForm(data.form, {
+        customValidity: true,
+        validators: data.validators
+    })
     
 </script>
 <main class="main-content">
-    <p class="page-title">Editando {equipe.nome}</p>
+    <p class="page-title">Editando Equipe</p>
 
     <br />
     <br />
@@ -21,17 +28,17 @@
                 <input
                     type="text"
                     class="input-name input-border input-block"
-                    name="teamName"
+                    name="nome"
                     placeholder="Nome da Equipe"
-                    value={equipe.nome}
+                    bind:value={$form.nome}
                 />
         
                 <label for="">Nº de Jogadores</label>
                 <input
                     type="number"
                     class="input-border input-number"
-                    name="teamNumber"
-                    value={equipe.numeroJogadores}
+                    name="numeroJogadores"
+                    bind:value={$form.numeroJogadores}
                 />
             </div>
             <ImageUploader on:message={e => receivedImage = e.detail}/>
@@ -52,12 +59,12 @@
         <br />
 
         <textarea
-            name="teamDescription"
+            name="descricao"
             class="textfield"
             cols="70"
             rows="10"
             placeholder="Descrição"
-            value={equipe.descricao}
+            bind:value={$form.descricao}
         />
 
         <br />
