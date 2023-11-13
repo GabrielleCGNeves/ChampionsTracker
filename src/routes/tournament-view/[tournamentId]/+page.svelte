@@ -1,72 +1,15 @@
 <script>
-    import TournamentHeader from "$lib/components/tournament/TournamentHeader.svelte";
-    const tournament_name = "Sword Fighters";
-    const players = 12;
-    const game = "Roblox";
-    const type = "Virtual";
-    const date = "08 de Abril, 2023";
-    const owner_name = "Bob";
+    import Butao from "$lib/components/Butao.svelte";
+    import Modal from "$lib/components/Modal.svelte";
 
-    export let data;
+    let showModal = false;
+    
 
-    $: ({ equipes, campeonato, owner } = data);
-    console.log("🚀 ~ file: +page.svelte:13 ~ equipes:", equipes);
+    export let data
+    $: ({ equipes, campeonato, owner, equipesUsuario } = data);
 
-    const getSumOfJogadores = (equipes) => {
-        return equipes.reduce((sum, equipe) => sum + equipe.numeroJogadores, 0);
-    };
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    };
-    const dateFormat = (dataOriginal) => {
-        let regex = /(\w{3}) (\w{3}) (\d{2}) (\d{4})/;
-        let match = regex.exec(dataOriginal);
-
-        if (match) {
-            const meses = {
-                Jan: "Janeiro",
-                Feb: "Fevereiro",
-                Mar: "Março",
-                Apr: "Abril",
-                May: "Maio",
-                Jun: "Junho",
-                Jul: "Julho",
-                Aug: "Agosto",
-                Sep: "Setembro",
-                Oct: "Outubro",
-                Nov: "Novembro",
-                Dec: "Dezembro",
-            };
-
-            let mes = match[2];
-            let dia = match[3];
-            let ano = match[4];
-
-            return `${dia} de ${meses[mes]}, ${ano}`;
-        } else {
-            return "Erro ao Formatar a Data";
-        }
-    };
-
-    // Exemplo de uso da função
-    let dataFormatada = dateFormat(
-        "Sun Nov 12 2023 17:23:42 GMT-0300 (Horário Padrão de Brasília)"
-    );
-    console.log(dataFormatada); // Saída esperada: "12 de Novembro, 2023"
 </script>
 
-<div class="tournament-main">
-    <TournamentHeader
-        tournamentName={campeonato.nome}
-        players={getSumOfJogadores(equipes)}
-        game={campeonato.jogo}
-        type={capitalizeFirstLetter(campeonato.tipo)}
-        date={dateFormat(campeonato.dataCriacao)}
-        ownerName={owner.nome}
-        bannerUrl={campeonato.foto}
-        ownerImageUrl={owner.foto}
-    />
     <div class="tournament-content">
         <div class="tournament-content-left">
             <div class="tournament-rules">
@@ -93,30 +36,119 @@
         </div>
         <div class="tournament-content-right">
             <h3>Informações</h3>
+            <div class="tournament-info">
+                <!-- faz um .map aqui pra carregar as informações depois -->
+                <div class="text-reset">
+                    <span>Equipes participando:</span>
+                    <span>{equipes.length}</span>
+                </div>
+                <!-- <div class="text-reset">
+                    <span>Participantes:</span>
+                    <span>5</span>
+                </div>
+                <div class="text-reset">
+                    <span>Fechamento dos palpites:</span>
+                    <span>13/04/2023</span>
+                </div>
+                <div class="text-reset">
+                    <span>Palpitador com mais pontos:</span>
+                    <span>Nicolau Kardash</span>
+                </div>
+                <div class="text-reset">
+                    <span>Melhor jogador:</span>
+                    <span>Erick Santos</span>
+                </div> -->
+            </div>
+        </div>
+        <div class="request-entry">
+            <Butao
+                ref="modal"
+                onClick={() => (showModal = true)}
+                texto={"PEDIR PARTICIPAÇÃO"}
+            />
         </div>
     </div>
-</div>
+    <form action="?/requestEntry" method="post">
+        <Modal bind:showModal>
+            <h2 slot="header">Pedir Participação</h2>
+            <div class="user-equipes">
+                {#each equipesUsuario as equipe}
+                    <div class="user-equipe">
+                        <label for="{equipe.id}">{equipe.nome}</label>
+                        <input type="radio" name="equipe" value={equipe.id} id="">
+                    </div>
+                {/each}
+            </div>
+            <div class="submit-button-user-equipes">
+                <Butao ref="modal" tipo="submit" texto={"PEDIR"} />
+            </div>
+        </Modal>
+    </form>
 
-<style>
 
+
+<style> 
+    .submit-button-user-equipes {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .user-equipes {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-align: end;
+    }
+    .request-entry {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    :global([ref="modal"]) {
+        background-color: var(--secondary-color);
+    }
+
+    .tournament-content-right {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .tournament-info {
+        border-radius: 25px;
+        background-color: var(--secondary-color);
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px 20px 30px;
+        gap: 12px;
+    }
+    
+    .text-reset {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 17px;
+    }
+
+    .text-reset > span:last-child {
+        opacity: 60%;
+    }
 
     .tournament-content-left {
         width: 70vw;
         /* border: red solid 1px; */
     }
-
-    .tournament-main {
-        height: 100vh;
-        background-color: var(--quaternary-color);
-    }
-
+        
     .tournament-content {
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         padding: 30px;
+        gap: 30px;
         /* border: red solid 1px; */
     }
-
+    
     .team-list {
         padding: 20px;
         border-radius: 25px;
