@@ -2,17 +2,17 @@ import { fail, redirect } from '@sveltejs/kit'
 import { prisma } from '$lib/server/prisma'
 import { z } from 'zod'
 import bcrypt from 'bcrypt'
-import { superValidate } from 'sveltekit-superforms/server'
+import { setError, superValidate } from 'sveltekit-superforms/server'
 
 const userSchema = z.object({
-    nome: z.string().min(1),
-    apelido: z.string().min(3),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6)
+    nome: z.string().min(1, {message: 'O nome deve ter pelo menos 1 caractere'}),
+    apelido: z.string().min(3, {message: 'O apelido deve ter pelo menos 3 caracteres'}),
+    email: z.string().email({message: 'Email invalido'}),
+    password: z.string().min(6, {message: 'A senha deve ter pelo menos 6 caracteres'}),
+    confirmPassword: z.string().min(6, {message: 'A senha deve ter pelo menos 6 caracteres'})
 })
 .refine(data => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: ' As senhas precisam ser iguais',
     path: ['confirmPassword']
 })
 
@@ -34,11 +34,19 @@ export const actions = {
     default: async (event) => {
         const form = await superValidate(event, userSchema)
 
+        const { nome, apelido, email, password } = form.data
+        
         if (!form.valid) {
             return fail(400, { form })
         }
+        
+        if (await prisma.Usuario.findUnique({ where: { email } })) {
+            return setError(form, 'email', 'Email ja existe')
+        }
 
-        const { nome, apelido, email, password } = form.data
+        if (await prisma.Usuario.findUnique({ where: { apelido } })) {
+            return setError(form, 'apelido', 'Apelido ja existe')
+        }
 
         try {
             await prisma.Usuario.create({
@@ -47,7 +55,7 @@ export const actions = {
                     apelido,
                     email,
                     passwordHash: await bcrypt.hash(password, 10),
-                    foto: "https://placehold.co/200x200/png?text=Placeholder",
+                    foto: `https://api.dicebear.com/7.x/lorelei/svg?seed=${nome}?backgroundColor=b6e3f4,c0aede,d1d4f9`,
                     authToken: crypto.randomUUID(),
                     pontosTotais: 0,
                 }

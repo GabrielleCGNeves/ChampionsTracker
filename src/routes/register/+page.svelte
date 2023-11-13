@@ -4,7 +4,10 @@
     import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
 
     export let data
-    const { form, errors, enhance } = superForm(data.form)
+    const { form, enhance } = superForm(data.form, {
+        customValidity: true,
+        validators: data.validators
+    })
 </script>
 
 <main class="main-content">
@@ -19,34 +22,24 @@
         </div>
     </div> -->
     
-    <!-- <SuperDebug data={$form} /> -->
+    <SuperDebug data={$form} />
 
     <form method="POST" class="forms" use:enhance>
 
         <input type="text" class="input" name="nome" placeholder="Nome" bind:value={$form.nome}>
-        {#if $errors.nome}
-        <small>{$errors.nome}</small>
-        {/if}
+        
         <br>
         <input type="text" class="input" name="apelido" placeholder="Apelido" bind:value={$form.apelido}>
-        {#if $errors.apelido}
-        <small>{$errors.apelido}</small>
-        {/if}
+        
         <br>
         <input type="text" class="input" name="email" placeholder="Email" bind:value={$form.email}>
-        {#if $errors.email}
-        <small>{$errors.email}</small>
-        {/if}
+        
         <br>
         <input type="password" class="input" name="password" placeholder="Senha" bind:value={$form.password}>
-        {#if $errors.password}
-        <small>{$errors.password}</small>
-        {/if}
+        
         <br>
         <input type="password" class="input" name="confirmPassword" placeholder="Confirme a Senha" bind:value={$form.confirmPassword}>
-        {#if $errors.confirmPassword}
-        <small>{$errors.confirmPassword}</small>
-        {/if}
+        
         <br>
         <br>
         <Butao ref="confirmar" texto={"REGISTRAR"} tipo="submit" />
