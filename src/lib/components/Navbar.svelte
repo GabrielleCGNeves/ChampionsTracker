@@ -49,20 +49,6 @@
             </a>
         </li>
         {/if}
-        <!-- {#if $page.data.user}
-        <li class="nav-item">
-            <a href="/logout" class="nav-link">
-                <svg viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path class="svg-color" d="m497 273-168 168c-15 15-41 4.5-41-17v-96h-136c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136v-96c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zm-305 163v-40c0-6.6-5.4-12-12-12h-84c-17.7 0-32-14.3-32-32v-192c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-84c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/></svg>
-                    
-                <div class="link-desc">
-                    <span class="link-title">Logout</span>
-                    <br>
-                    <span class="link-text">Lorem</span>
-                </div>
-            </a>
-        </li>
-        {/if} -->
 
         <li class="nav-item">
             <a href="/" class="nav-link">
@@ -78,6 +64,19 @@
             </a>
         </li>
         {#if $page.data.user}
+        <li class="nav-item">
+            <a href="/perfil" class="nav-link">
+                <svg viewBox="0 0 52 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path class="svg-color" d="M25.8906 29.5892C34.0623 29.5892 40.6852 22.9663 40.6852 14.7946C40.6852 6.6229 34.0623 0 25.8906 0C17.7188 0 11.096 6.6229 11.096 14.7946C11.096 22.9663 17.7188 29.5892 25.8906 29.5892ZM36.2468 33.2879H34.3165C31.7506 34.4668 28.8957 35.1372 25.8906 35.1372C22.8854 35.1372 20.0421 34.4668 17.4646 33.2879H15.5343C6.95809 33.2879 0 40.2459 0 48.8222V53.6304C0 56.6934 2.48503 59.1784 5.54798 59.1784H46.2331C49.2961 59.1784 51.7811 56.6934 51.7811 53.6304V48.8222C51.7811 40.2459 44.823 33.2879 36.2468 33.2879Z"/>
+                    </svg>
+                    
+                <div class="link-desc">
+                    <span class="link-title">Meu Perfil</span>
+                    <br>
+                    <!-- <span class="link-text">Entre na sua conta</span> -->
+                </div>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="/team/create" class="nav-link">
                 <svg viewBox="0 0 52 52" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
