@@ -1,29 +1,74 @@
 <script>
     import { page } from "$app/stores";
 
-    export let tournamentName = "";
-    export let players = "";
-    export let game = "";
-    export let type = "";
-    export let date = "";
-    export let ownerName = "";
-    // You can also pass in the tournament banner URL and owner image URL as props if needed
-    export let bannerUrl = "default-banner-url";
-    export let ownerImageUrl = "default-owner-image-url";
-    export let ownerId;
+    import { derived } from "svelte/store";
+
+    // Create a derived store that tracks the current path
+    const currentPath = derived(page, ($page) => $page.url.pathname);
+
+    export let tournament;
+    export let teams;
+    export let owner;
 
     const tournamentId = $page.params.tournamentId;
 
+    const getSumOfJogadores = (equipes) => {
+        return equipes.reduce((sum, equipe) => sum + equipe.numeroJogadores, 0);
+    };
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+    const dateFormat = (dataOriginal) => {
+        let regex = /(\w{3}) (\w{3}) (\d{2}) (\d{4})/;
+        let match = regex.exec(dataOriginal);
+
+        if (match) {
+            const meses = {
+                Jan: "Janeiro",
+                Feb: "Fevereiro",
+                Mar: "Março",
+                Apr: "Abril",
+                May: "Maio",
+                Jun: "Junho",
+                Jul: "Julho",
+                Aug: "Agosto",
+                Sep: "Setembro",
+                Oct: "Outubro",
+                Nov: "Novembro",
+                Dec: "Dezembro",
+            };
+
+            let [mes, dia, ano] = match.slice(2, 5);
+
+            return `${dia} de ${meses[mes]}, ${ano}`;
+        } else {
+            return "Erro ao Formatar a Data";
+        }
+    };
+
+    // Check if the current route matches a given segment
+    const isActive = (segment) => {
+        let path;
+        currentPath.subscribe(($currentPath) => {
+            path = $currentPath;
+        })();
+        return path === segment;
+    };
 </script>
 
 <div class="tournament-header">
     <div class="tournament-image-wrapper">
-        <img class="tournament-image" src={bannerUrl} alt="Tournament Banner" />
+        <img
+            class="tournament-image"
+            src={tournament.foto}
+            alt="Tournament Banner"
+        />
     </div>
 
     <div class="tournament-header-content">
         <div class="tournament-info">
-            <h1>{tournamentName}</h1>
+            <h1>{tournament.nome}</h1>
             <div class="stats">
                 <!-- Player stats -->
                 <span class="stats-element players">
@@ -39,7 +84,7 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {players} Jogadores
+                    {teams.length} Jogadores
                 </span>
                 <!-- Game stats -->
                 <span class="stats-element game">
@@ -55,7 +100,7 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {game}
+                    {tournament.jogo}
                 </span>
                 <!-- Type stats -->
                 <span class="stats-element type">
@@ -71,7 +116,7 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {type}
+                    {capitalizeFirstLetter(tournament.tipo)}
                 </span>
                 <!-- Date stats -->
                 <span class="stats-element date">
@@ -87,26 +132,47 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {date}
+                    {dateFormat(tournament.dataCriacao)}
                 </span>
             </div>
         </div>
         <div class="tournament-owner">
             <div class="owner-info">
                 <div class="owner-text">Organizado por</div>
-                <div class="owner-name">{ownerName}</div>
+                <div class="owner-name">{owner.nome}</div>
             </div>
-            <img src={ownerImageUrl} alt="" class="owner-img" />
+            <img src={owner.foto} alt="" class="owner-img" />
         </div>
     </div>
 
     <div class="tournament-nav">
         <ul class="tournament-nav-list">
-            <li><a href="./{tournamentId}/informacoes">Informações</a></li>
-            <li><a href="./{tournamentId}/historico">Histórico</a></li>
-            <li><a href="./{tournamentId}/posicoes">Posições das equipes</a></li>
-            {#if ($page.data.user.id == ownerId)}
-            <li><a href="./{tournamentId}/configs">Configurações</a></li>
+            <li
+                class:active={$currentPath &&
+                    isActive("/tournament-view/" + tournamentId)}
+            >
+                <a href="/tournament-view/{tournamentId}">Informações</a>
+            </li>
+            <li>
+                <a href="/tournament-view/{tournamentId}/historico">Histórico</a
+                >
+            </li>
+            <li>
+                <a href="/tournament-view/{tournamentId}/posicoes"
+                    >Posições das equipes</a
+                >
+            </li>
+            {#if $page.data.user.id == owner.id}
+                <li
+                    class:active={$currentPath &&
+                        isActive(
+                            "/tournament-view/" + tournamentId + "/configs"
+                        )}
+                >
+                    <a href="/tournament-view/{tournamentId}/configs"
+                        >Configurações</a
+                    >
+                </li>
             {/if}
         </ul>
     </div>
@@ -114,7 +180,7 @@
 
 <style>
     .active {
-        border-bottom: 3px solid #FFB300;
+        border-bottom: 3px solid #ffb300;
     }
     .tournament-nav-list > li > a {
         text-decoration: none;
@@ -127,7 +193,6 @@
     }
     .tournament-nav-list > li {
         height: 50px;
-
     }
     .tournament-nav-list {
         display: flex;
@@ -173,7 +238,6 @@
         line-height: 0.2rem;
         justify-content: center;
         /* border: red solid 1px; */
-
     }
 
     .tournament-image-wrapper {
