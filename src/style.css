@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 :root{
     /*      COLORS      */
     --primary-color: #0A092D;
@@ -14,7 +14,7 @@
 
     /*      FONT SETTING        */
     /* --header-font: ; */
-    --text-font: 'Inter', sans-serif;
+    --text-font: 'Outfit', sans-serif;
     /* --font-size: ; */
     font-family: var(--text-font);
        
