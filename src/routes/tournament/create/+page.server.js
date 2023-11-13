@@ -1,7 +1,6 @@
 import { prisma } from '$lib/server/prisma'
 import { fail, redirect } from "@sveltejs/kit"
 
-
 const atributo = []
 const pontoAtributo = []
 const atributosData = []
@@ -12,8 +11,14 @@ export async function load({ locals }) {
         throw redirect(302, '/login')
     }
     
+    const regras = await prisma.Regra.findMany({
+        where: {
+            usuarioId: locals.user.id
+        }
+    })
+
     return {
-        regras: await prisma.Regra.findMany()
+        regras
     }
 }
 
@@ -61,25 +66,33 @@ export const actions = {
             return fail(400, "Houve um erro ao criar a regra")
         }
     },
-    createTournament: async ({ locals, request }) => {
-        const { tournamentName, tournamentDescription, regraId } = Object.fromEntries(await request.formData());
+createTournament: async ({ locals, request }) => {
+    const { tournamentName, tournamentDescription, tournamentGameName, regraId } = Object.fromEntries(await request.formData());
 
-        try {
-            await prisma.Campeonato.create({
-                data: {
-                    usuarioId: locals.user.id,
-                    regraId: parseInt(regraId),
-                    nome: tournamentName,
-                    descricao: tournamentDescription,
-                    foto: "https://placehold.co/600x400",
-                    status: "ATIVO"
-                }
-            })
-        } catch (error) {
-            console.error(error);
-            return fail(400, "Houve um erro ao criar o torneio")
-        }
 
-        throw redirect(302, '/feed')
+    if (await prisma.Campeonato.findFirst({ where: { nome: tournamentName } })) {
+        console.log('Tournament already exists:', tournamentName);
+        return fail(400, 'Este torneio ja existe');
     }
+
+    try {
+        await prisma.Campeonato.create({
+            data: {
+                usuarioId: locals.user.id,
+                regraId: parseInt(regraId),
+                jogo: tournamentGameName,
+                nome: tournamentName,
+                descricao: tournamentDescription,
+                foto: "https://placehold.co/600x400",
+                status: "ATIVO"
+            }
+        });
+    } catch (error) {
+        console.error('Error creating tournament:', error);
+        return fail(400, "Houve um erro ao criar o torneio");
+    }
+
+    console.log('Redirecting to /feed');
+    throw redirect(302, '/feed');
+}
 };

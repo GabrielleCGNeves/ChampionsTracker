@@ -2,18 +2,17 @@
     import Butao from "$lib/components/Butao.svelte";
     import Modal from "$lib/components/Modal.svelte";
     import { writable } from "svelte/store";
-    import { enhance } from "$app/forms";
     import { page } from "$app/stores";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
-
-    let receivedImage = "";
-
-    let showRegras = false;
-    let showAddRegras = false;
-
-    let selectedRegra;
+    import { enhance } from "$app/forms";
 
     export let data;
+
+    let receivedImage = "";
+    let showRegras = false;
+    let showAddRegras = false;
+    let selectedRegra;
+
     $: ({ regras } = data);
 
     const addRegra = () => {
@@ -22,8 +21,8 @@
 
     // https://stackoverflow.com/questions/68688341/howto-add-another-component-on-button-click
     let numRows = [0];
-
     let counter = writable(1);
+
 </script>
 
 <main class="main-content">
@@ -37,7 +36,7 @@
     <br />
     <br />
 
-    <form action="?/createTournament" method="POST" class="forms">
+    <form action="?/createTournament" method="POST" class="forms" use:enhance>
         <div class="center">
             <ImageUploader
                 isLarge={true}
@@ -49,7 +48,11 @@
                 bind:value={receivedImage}
                 style="display: none;"
             />
+        </div>
 
+        <br />
+
+        <div class="grid">
             <input
                 type="text"
                 class="input-border input-block"
@@ -57,20 +60,16 @@
                 placeholder="Nome"
             />
         </div>
-
         <br />
-
         <div class="grid">
-            <Butao ref="player" texto={"ADICIONAR EQUIPE"} />
             <input
                 type="text"
                 class="input input-player"
-                name="idEquipes"
-                placeholder="Código da Equipe"
+                name="tournamentGameName"
+                placeholder="Nome do Jogo"
             />
         </div>
         <div class="center">
-            <br />
             <br />
 
             <textarea
@@ -90,7 +89,9 @@
                 {#if !selectedRegra}
                     <b class="rules">Nenhuma regra adicionada</b>
                 {:else}
-                    <b class="rules">{regras.find((r) => r.id == selectedRegra).nome}</b>
+                    <b class="rules"
+                        >{regras.find((r) => r.id == selectedRegra).nome}</b
+                    >
                 {/if}
             </div>
 
@@ -103,7 +104,8 @@
             <br />
         </div>
 
-        <!-- TODO: Deletar regras, adicionar no forms -->
+        <!-- TODO: Deletar regras-->
+        <!-- MOSTRAR REGRAS -->
         <Modal bind:showModal={showRegras}>
             <h1 class="modalHeader" slot="header">REGRAS</h1>
             <div class="list">
@@ -150,6 +152,7 @@
     </form>
 
     <!-- TODO: Contar Pontos -->
+    <!-- ADICIONAR REGRAS NO PACK -->
     <form action="?/createRegra" method="post" use:enhance>
         <Modal bind:showModal={showAddRegras}>
             <input
@@ -224,7 +227,6 @@
         margin: 0;
         width: 100%;
     }
-
 
     /* texto regras */
 
