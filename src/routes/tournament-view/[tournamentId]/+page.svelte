@@ -1,6 +1,7 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { page } from "$app/stores";
 
     let showModal = false;
     
@@ -75,13 +76,15 @@
                 {#each equipesUsuario as equipe}
                     <div class="user-equipe">
                         <label for="{equipe.id}">{equipe.nome}</label>
-                        <input type="radio" name="equipe" value={equipe.id} id="">
+                        <input type="radio" name="equipePedido" value={equipe.id} id="">
                     </div>
                 {/each}
             </div>
+            {#if !$page.data.user}
             <div class="submit-button-user-equipes">
                 <Butao ref="modal" tipo="submit" texto={"PEDIR"} />
             </div>
+            {/if}
         </Modal>
     </form>
 
