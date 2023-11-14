@@ -74,7 +74,7 @@
                                 </svg>
                             {/if}
                         </div>
-                        <div class="col">{campeonato.nome}</div>
+                        <div class="col"><a class="link-tournament" href="/tournament-view/{campeonato.id}">{campeonato.nome}</a></div>
                         <div class="col">{campeonato.status}</div>
                     </div>
                 {/each}
@@ -84,6 +84,13 @@
 </div>
 
 <style>
+    .link-tournament {
+        text-decoration: none;
+        color: var(--text-color);
+    }
+    .link-tournament:hover {
+        color:var(--gold-color);
+    }
     .row-light {
         background-color: #0a092d;
     }
