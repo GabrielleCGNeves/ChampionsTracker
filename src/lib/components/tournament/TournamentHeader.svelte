@@ -147,31 +147,18 @@
 
     <div class="tournament-nav">
         <ul class="tournament-nav-list">
-            <li
-                class:active={$currentPath &&
-                    isActive("/tournament-view/" + tournamentId)}
-            >
+            <li class:active={$currentPath && isActive("/tournament-view/" + tournamentId)}>
                 <a href="/tournament-view/{tournamentId}">Informações</a>
             </li>
-            <li>
-                <a href="/tournament-view/{tournamentId}/historico">Histórico</a
-                >
+            <li class:active={$currentPath && isActive("/tournament-view/" + tournamentId + "/historico")}>
+                <a href="/tournament-view/{tournamentId}/historico">Histórico</a>
             </li>
-            <li>
-                <a href="/tournament-view/{tournamentId}/posicoes"
-                    >Posições das equipes</a
-                >
+            <li class:active={$currentPath && isActive("/tournament-view/" + tournamentId + "/posicoes")}>
+                <a href="/tournament-view/{tournamentId}/posicoes">Posições das equipes</a>
             </li>
             {#if $page.data.user.id == owner.id}
-                <li
-                    class:active={$currentPath &&
-                        isActive(
-                            "/tournament-view/" + tournamentId + "/configs"
-                        )}
-                >
-                    <a href="/tournament-view/{tournamentId}/configs"
-                        >Configurações</a
-                    >
+                <li class:active={$currentPath && isActive("/tournament-view/" + tournamentId + "/configs")}>
+                    <a href="/tournament-view/{tournamentId}/configs">Configurações</a>
                 </li>
             {/if}
         </ul>
