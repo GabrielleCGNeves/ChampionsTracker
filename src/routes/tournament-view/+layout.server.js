@@ -1,4 +1,5 @@
 import { prisma } from "$lib/server/prisma"
+import { redirect } from "@sveltejs/kit"
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, locals }) {
