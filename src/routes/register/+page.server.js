@@ -6,7 +6,7 @@ import { setError, superValidate } from 'sveltekit-superforms/server'
 
 const userSchema = z.object({
     nome: z.string().min(1, {message: 'O nome deve ter pelo menos 1 caractere'}),
-    apelido: z.string().min(3, {message: 'O apelido deve ter pelo menos 3 caracteres'}),
+    apelido: z.string().min(3, {message: 'O apelido deve ter pelo menos 3 caracteres'}).refine(string => !string.includes(' '), 'O apelido não pode conter espaços'),
     email: z.string().email({message: 'Email invalido'}),
     password: z.string().min(6, {message: 'A senha deve ter pelo menos 6 caracteres'}),
     confirmPassword: z.string().min(6, {message: 'A senha deve ter pelo menos 6 caracteres'})
