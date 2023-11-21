@@ -1,5 +1,6 @@
-import { error, redirect, fail } from "@sveltejs/kit";
+import { error, fail } from "@sveltejs/kit";
 import { prisma } from "$lib/server/prisma";
+import { redirect } from "sveltekit-flash-message/server"
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ locals, params }) {
@@ -100,6 +101,6 @@ export const actions = {
                     break;
             }
         });
-        throw redirect(302, `/tournament-view/${params.tournamentId}`);
+        throw redirect(`/tournament-view/${params.tournamentId}`, {type:"success", message: "Equipes Configuradas"});
     }
 };
