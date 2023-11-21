@@ -1,12 +1,17 @@
 <script>
     import { dateFormat, capitalizeFirstLetter } from "$lib/util/helpers";
+    export let numJogadores = 0;
+    export let campeonato = {};
+
+
+    
 </script>
 
 <div class="card">
     <img
-        src="{image}" alt="Foto do Jogo 1"
+        src="{campeonato.foto}" alt="Foto do Jogo 1"
     />
-    <h2>{title}</h2>
+    <h2>{campeonato.nome}</h2>
     <div class="card-attribute">
         <svg
             class="card-icon"
@@ -21,7 +26,7 @@
                 fill="#76809D"
             />
         </svg>
-        {game}
+        {campeonato.jogo}
     </div>
     <div class="card-attribute">
         <svg
@@ -53,7 +58,7 @@
                 fill="#76809D"
             />
         </svg>
-        {players} participants
+        {numJogadores} participants
     </div>
     <div class="card-attribute">
         <svg
