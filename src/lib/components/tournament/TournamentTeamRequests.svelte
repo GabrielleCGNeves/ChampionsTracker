@@ -1,13 +1,26 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import { enhance } from "$app/forms";
-    import { writable } from "svelte/store";
 
     export let equipes;
+
+    const handleToast = () => {
+        return async ({ result, update }) => {
+            switch (result.type) {
+                case 'failure':
+                    toast.error(result.data.message)
+                    break;
+            
+                default:
+                    break;
+            }
+            await update();
+        }
+    }
 </script>
 
 <div class="tournament-requests">
-    <form method="post">
+    <form method="post" use:enhance={handleToast}>
         <table id="myTable">
             <thead>
                 <tr>

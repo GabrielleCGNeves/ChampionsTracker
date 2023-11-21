@@ -24,6 +24,20 @@
     let numRows = [0];
     let counter = writable(1);
 
+    const submitTournament = () => {
+        return async ({ result, update }) => {
+            switch (result.type) {
+                case 'failure':
+                    toast.error(result.data.message)
+                    break;
+            
+                default:
+                    break;
+            }
+            await update();
+        }
+    }
+
 </script>
 <Title title="Criar Campeonato" />
 <main class="main-content">
@@ -37,7 +51,7 @@
     <br />
     <br />
 
-    <form action="?/createTournament" method="POST" class="forms" use:enhance>
+    <form action="?/createTournament" method="POST" class="forms" use:enhance={submitTournament}>
         <div class="center">
             <ImageUploader
                 isLarge={true}

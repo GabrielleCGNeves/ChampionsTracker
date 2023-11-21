@@ -3,13 +3,32 @@
     import TournamentTeamImage from '$lib/components/tournament/TournamentTeamImage.svelte';
     import Butao from "$lib/components/Butao.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import toast from "svelte-french-toast"
     import { page } from "$app/stores";
+    import { enhance } from "$app/forms";
 
     let showModal = false;
     
 
     export let data
     $: ({ equipes, campeonato, owner, equipesUsuario } = data);
+
+    const handleToast = () => {
+        return async ({ result, update }) => {
+            switch (result.type) {
+                case 'success':
+                    toast.success("Pedido enviado com sucesso")
+                    break;
+                case 'failure':
+                    toast.error(result.data.message)
+                    break;
+            
+                default:
+                    break;
+            }
+            await update();
+        }
+    }
 
 </script>
 
@@ -64,7 +83,7 @@
             />
         </div>
     </div>
-    <form action="?/requestEntry" method="post">
+    <form action="?/requestEntry" method="post" use:enhance={handleToast}>
         <Modal bind:showModal>
             <h2 slot="header">Pedir Participação</h2>
             <div class="user-equipes">
