@@ -1,4 +1,4 @@
-import { redirect, fail, error } from '@sveltejs/kit';
+import { fail, error } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma'
 
 /** @type {import('./$types').Actions} */
@@ -7,7 +7,6 @@ export const actions = {
         const { equipePedido } = Object.fromEntries(await request.formData());
 
         if (!equipePedido) {
-            // console.log("Selecione uma equipe");
             return fail(500, {message: "Equipe não selecionada"});
         }
 
@@ -19,13 +18,12 @@ export const actions = {
         });
 
         if (pedidoExists) {
-            // console.log("Esta equipe ja foi pedida");
             return fail(500, {message: "Esta equipe ja foi pedida"});
         }
 
         const equipeCampeonato = await prisma.EquipeDoCampeonato.findFirst({
             where: {
-                id: Number(params.tournamentId),
+                campeonatoId: Number(params.tournamentId),
                 equipeId: Number(equipePedido)
             }
         })
@@ -41,9 +39,8 @@ export const actions = {
                     equipeId: Number(equipePedido)
                 }
             });
-            // console.log("Equipe pedida com sucesso");
+            
         } catch (error) {
-            // console.log("Não foi possível pedir a participação");
             return fail(500, {message: "Não foi possivel pedir a participação"});
         }
     }
