@@ -1,6 +1,7 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
     import Card from "$lib/components/Card.svelte";
+    import Title from "$lib/components/Title.svelte";
     import { page } from '$app/stores'
 
     
@@ -31,6 +32,7 @@
         },
     ];
 </script>
+<Title title="Home" />
 
 <main class="main-content">
     {#if $page.data.user}

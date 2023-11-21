@@ -1,5 +1,6 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
+    import Title from "$lib/components/Title.svelte";
     import { superForm } from "sveltekit-superforms/client";
     import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
 
@@ -9,7 +10,7 @@
         validators: data.validators
     })
 </script>
-
+<Title title="Registrar" />
 <main class="main-content">
     <p class="page-title">Registre-se no Champions Tracker</p>
     <!-- <p class="details">Logar com</p> -->

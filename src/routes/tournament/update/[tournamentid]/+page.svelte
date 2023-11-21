@@ -2,6 +2,7 @@
     import Butao from "$lib/components/Butao.svelte";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import Title from "$lib/components/Title.svelte";
     
     let showModal = false;
 
@@ -11,6 +12,7 @@
     export let form;
 
 </script>
+<Title title="Editando Campeonato" />
 <main class="main-content">
     <p class="page-title">CADASTRO</p>
 

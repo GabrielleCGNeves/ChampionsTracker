@@ -3,14 +3,14 @@
     import CardTeam from "$lib/components/CardTeam.svelte";
     import Modal from "$lib/components/Modal.svelte";
     import { page } from "$app/stores";
+    import Title from "$lib/components/Title.svelte";
 
     export let data;
 
     $: ({ equipes, campeonatos } = data);
-
-    console.log(campeonatos);
+    
 </script>
-
+<Title title="Feed" />
 <div class="main-content">
     <div class="section">
         <div class="title-button">

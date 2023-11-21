@@ -3,6 +3,7 @@
     import ImageUploader from "$lib/components/ImageUploader.svelte";
     import { superForm } from "sveltekit-superforms/client";
     import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
+    import Title from "$lib/components/Title.svelte";
     
     let receivedImage = "";
 
@@ -16,6 +17,7 @@
     })
     
 </script>
+<Title title="Editando Equipe" />
 <main class="main-content">
     <p class="page-title">Editando Equipe</p>
 

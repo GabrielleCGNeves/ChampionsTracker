@@ -5,6 +5,7 @@
     import { page } from "$app/stores";
     import ImageUploader from "$lib/components/ImageUploader.svelte";
     import { enhance } from "$app/forms";
+    import Title from "$lib/components/Title.svelte";
 
     export let data;
 
@@ -24,7 +25,7 @@
     let counter = writable(1);
 
 </script>
-
+<Title title="Criar Campeonato" />
 <main class="main-content">
     <p class="page-title">CAMPEONATO</p>
 
