@@ -4,33 +4,8 @@
     import Title from "$lib/components/Title.svelte";
     import { page } from '$app/stores'
 
-    
-    const card = [
-        {
-            image: "https://s2-ge.glbimg.com/PqYBNkb90VdSg422I8Lb1fthGEE=/0x0:920x518/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2021/B/B/oEivukQZ6J4Ra6qVg9hQ/league-of-legends-campeoes-divulgacao-riot-games.jpg",
-            title: "MSI League of Legends",
-            date: "January 28, 2004",
-            game: "League of Legends",
-            type: "Virtual",
-            players: 10,
-        },
-        {
-            image: "https://assets.fortnitecreativehq.com/wp-content/uploads/2023/03/25235015/screen_comp-1487.jpeg",
-            title: "Sword Fighters",
-            date: "April 08, 2023",
-            game: "Roblox",
-            type: "Virtual",
-            players: 10,
-        },
-        {
-            image: "https://cdn.cloudflare.steamstatic.com/steam/apps/412220/capsule_616x353.jpg?t=1671713534",
-            title: "FTL Tournament",
-            date: "February 15, 2004",
-            game: "DDraceNetwork",
-            type: "Virtual",
-            players: 10,
-        },
-    ];
+    export let data;
+    $: ({ campeonatos } = data)
 </script>
 <Title title="Home" />
 
@@ -54,8 +29,8 @@
             <Butao ref="seeMore" texto={"VER MAIS"} />
         </div>
         <div class="card-container">
-            {#each card as { image, title, date, game, type, players }}
-                <Card {image} {title} {date} {game} {type} {players} />
+            {#each campeonatos as campeonato}
+                <Card {campeonato} />
             {/each}
         </div>
     </div>
@@ -158,11 +133,10 @@
     /* CARD  */
     .card-container {
         display: flex;
-        justify-content: space-between;
         max-width: 1200px;
         margin: 0 auto;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 25px;
     }
     /* ================================== */
 
