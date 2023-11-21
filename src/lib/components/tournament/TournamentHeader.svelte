@@ -20,6 +20,11 @@
         })();
         return path === segment;
     };
+
+    let countJogadores = 0;
+    teams.forEach((team) => {
+        countJogadores += team.numeroJogadores
+    })
 </script>
 
 <div class="tournament-header">
@@ -49,7 +54,7 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {teams.length} Jogadores
+                    {countJogadores} Jogadores
                 </span>
                 <!-- Game stats -->
                 <span class="stats-element game">
