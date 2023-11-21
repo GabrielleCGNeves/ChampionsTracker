@@ -4,6 +4,7 @@
     import Modal from "$lib/components/Modal.svelte";
     import { superForm } from "sveltekit-superforms/client";
     import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
+    import Title from "$lib/components/Title.svelte";
     
     let showModal = false;
     
@@ -16,6 +17,7 @@
     })
 
 </script>
+<Title title="Criar Equipe"/>
 <main class="main-content">
     <p class="page-title">CADASTRO</p>
     

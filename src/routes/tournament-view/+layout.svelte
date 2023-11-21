@@ -1,8 +1,10 @@
 <script>
     import TournamentHeader from "$lib/components/tournament/TournamentHeader.svelte";
+    import Title from "$lib/components/Title.svelte";
     export let data
     $: ({ equipes, campeonato, owner } = data);
 </script>
+<Title title="Campeonato" />
 
 <div class="tournament-main">
     <TournamentHeader

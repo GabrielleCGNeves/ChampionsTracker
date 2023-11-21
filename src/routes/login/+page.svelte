@@ -2,6 +2,7 @@
     import Butao from "$lib/components/Butao.svelte";
     import { superForm } from "sveltekit-superforms/client";
     import SuperDebug from "sveltekit-superforms/client/SuperDebug.svelte";
+    import Title from "$lib/components/Title.svelte";
 
     export let data
     const { form, enhance } = superForm(data.form, {
@@ -11,7 +12,7 @@
     
 
 </script>
-
+<Title title="Login" />
 <main class="main-content">
     <p class="page-title">Logue no Champions Tracker</p>
     <!-- <p class="details">Logar com</p> -->

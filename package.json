@@ -28,6 +28,8 @@
 	"dependencies": {
 		"@prisma/client": "^5.4.2",
 		"bcrypt": "^5.1.1",
-		"dotenv": "^16.1.4"
+		"dotenv": "^16.1.4",
+		"svelte-french-toast": "^1.2.0",
+		"sveltekit-flash-message": "^2.2.2"
 	}
 }

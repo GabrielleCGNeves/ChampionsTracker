@@ -1,11 +1,14 @@
+<script>
+    import TournamentTeamRequests from '$lib/components/tournament/TournamentTeamRequests.svelte';
+    import { page } from "$app/stores";
 
+    export let data;
+    $: ({ equipesPedintes } = data);
+</script>
 
 <div class="tournament-content">
     <h3>Solicitações</h3>
-    <div class="tournament-requests">
-
-    </div>
-
+    <TournamentTeamRequests equipes={equipesPedintes} />
 </div>
 
 <style>
@@ -16,11 +19,5 @@
         padding: 30px;
         gap: 30px;
         /* border: red solid 1px; */
-    }
-
-    .tournament-requests {
-        padding: 20px;
-        border-radius: 25px;
-        background-color: #1A2032;
     }
 </style>

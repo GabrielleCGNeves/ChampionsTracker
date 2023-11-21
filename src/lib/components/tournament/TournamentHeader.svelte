@@ -2,7 +2,7 @@
     import { page } from "$app/stores";
 
     import { derived } from "svelte/store";
-
+    import { dateFormat, capitalizeFirstLetter} from "$lib/util/helpers";
     // Create a derived store that tracks the current path
     const currentPath = derived(page, ($page) => $page.url.pathname);
 
@@ -11,42 +11,7 @@
     export let owner;
 
     const tournamentId = $page.params.tournamentId;
-
-    const getSumOfJogadores = (equipes) => {
-        return equipes.reduce((sum, equipe) => sum + equipe.numeroJogadores, 0);
-    };
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    };
-    const dateFormat = (dataOriginal) => {
-        let regex = /(\w{3}) (\w{3}) (\d{2}) (\d{4})/;
-        let match = regex.exec(dataOriginal);
-
-        if (match) {
-            const meses = {
-                Jan: "Janeiro",
-                Feb: "Fevereiro",
-                Mar: "Março",
-                Apr: "Abril",
-                May: "Maio",
-                Jun: "Junho",
-                Jul: "Julho",
-                Aug: "Agosto",
-                Sep: "Setembro",
-                Oct: "Outubro",
-                Nov: "Novembro",
-                Dec: "Dezembro",
-            };
-
-            let [mes, dia, ano] = match.slice(2, 5);
-
-            return `${dia} de ${meses[mes]}, ${ano}`;
-        } else {
-            return "Erro ao Formatar a Data";
-        }
-    };
-
+    
     // Check if the current route matches a given segment
     const isActive = (segment) => {
         let path;
@@ -55,6 +20,11 @@
         })();
         return path === segment;
     };
+
+    let countJogadores = 0;
+    teams.forEach((team) => {
+        countJogadores += team.numeroJogadores
+    })
 </script>
 
 <div class="tournament-header">
@@ -84,7 +54,7 @@
                             fill="#BEBEBE"
                         />
                     </svg>
-                    {teams.length} Jogadores
+                    {countJogadores} Jogadores
                 </span>
                 <!-- Game stats -->
                 <span class="stats-element game">

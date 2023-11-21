@@ -1,4 +1,6 @@
 <script>
+    
+    import TournamentTeamImage from '$lib/components/tournament/TournamentTeamImage.svelte';
     import Butao from "$lib/components/Butao.svelte";
     import Modal from "$lib/components/Modal.svelte";
     import { page } from "$app/stores";
@@ -23,14 +25,7 @@
                 <h3>Equipes Inscritas</h3>
                 <div class="team-list">
                     {#each equipes as equipe}
-                        <div class="image-wrapper">
-                            <img
-                                src={equipe.foto}
-                                class="equipe-img"
-                                alt=""
-                                srcset=""
-                            />
-                        </div>
+                        <TournamentTeamImage foto={equipe.foto} nome={equipe.nome}/>
                     {/each}
                 </div>
             </div>
@@ -80,7 +75,7 @@
                     </div>
                 {/each}
             </div>
-            {#if !$page.data.user}
+            {#if $page.data.user}
             <div class="submit-button-user-equipes">
                 <Butao ref="modal" tipo="submit" texto={"PEDIR"} />
             </div>
@@ -158,22 +153,6 @@
         background-color: #1A2032;
         display: flex;
         gap: 10px;
-    }
-    .image-wrapper {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: #2E3856 solid 2px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .equipe-img {
-        max-width: auto;
-        max-height: 100%;
-        object-fit: cover;
     }
 
 

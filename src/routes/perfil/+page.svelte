@@ -1,8 +1,9 @@
 <script>
     import Butao from "$lib/components/Butao.svelte";
+    import Title from "$lib/components/Title.svelte";
     import { page } from "$app/stores";
 </script>
-
+<Title title="Perfil" />
 <main class="main-content">
     <div class="twin-colun">
         <div class="colun-one">

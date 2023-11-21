@@ -1,4 +1,5 @@
-import { fail, redirect } from '@sveltejs/kit'
+import { fail } from '@sveltejs/kit'
+import { redirect } from "sveltekit-flash-message/server"
 import bcrypt from 'bcrypt'
 import { prisma } from '$lib/server/prisma'
 import { z } from 'zod'
@@ -64,6 +65,6 @@ export const actions = {
             maxAge: rememberMe ? 60 * 60 * 24 * 30 : undefined,
         })
 
-        throw redirect(302, '/home')
+        throw redirect('/home', { type:"success", message: "Logado com Sucesso!" }, event)
     }
 };
