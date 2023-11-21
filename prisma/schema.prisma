@@ -69,7 +69,7 @@ model Equipe {
   foto               String               @map("equ_foto")
   descricao          String               @map("equ_desc")
   numeroJogadores    Int                  @map("equ_numjogadores")
-  pontosTotais       Int                  @map("equ_pontostotais")
+  pontosTotais       Int                  @default(0) @map("equ_pontostotais")
   usuario            Usuario              @relation(fields: [usuarioId], references: [id], onUpdate: Restrict)
   EquipeDoCampeonato EquipeDoCampeonato[]
   JogadorDaEquipe    JogadorDaEquipe[]
@@ -97,7 +97,7 @@ model Jogador {
   nome             String            @map("jog_nome")
   apelido          String            @map("jog_apelido")
   foto             String            @map("jog_foto")
-  pontosAcumulados Int               @map("jog_pontosacumulados")
+  pontosAcumulados Int               @default(0) @map("jog_pontosacumulados")
   usuario          Usuario?          @relation(fields: [usuarioId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   JogadorDaEquipe  JogadorDaEquipe[]
 
@@ -122,7 +122,7 @@ model PontoJogador {
   regraAtributoId Int     @map("rat_idregraatributo")
   jogadorId       Int     @map("jog_idjogador")
   quantidade      Int     @map("pjo_qtde")
-  pontosTotais    Int     @map("pjo_pontostotais")
+  pontosTotais    Int     @default(0) @map("pjo_pontostotais")
   partida         Partida @relation(fields: [partidaId], references: [id], onUpdate: Restrict)
 
   @@index([partidaId])
@@ -158,7 +158,7 @@ model EquipeDoCampeonato {
   id           Int        @id @default(autoincrement()) @map("eqc_idEquipeCampeonato")
   equipeId     Int        @map("eqc_idequipe")
   campeonatoId Int        @map("eqc_idcampeonato")
-  pontosTotais Int        @map("eqc_pontostotais")
+  pontosTotais Int        @default(0) @map("eqc_pontostotais")
   equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
 
@@ -171,7 +171,7 @@ model JogadorDaEquipe {
   id        Int     @id @default(autoincrement()) @map("jde_idJogadorEquipe")
   jogadorId Int     @map("jde_idjogador")
   equipeId  Int     @map("jde_idequipe")
-  pontos    Int     @map("jde_pontos")
+  pontos    Int     @default(0) @map("jde_pontos")
   jogador   Jogador @relation(fields: [jogadorId], references: [id], onUpdate: Restrict)
   equipe    Equipe  @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
 
