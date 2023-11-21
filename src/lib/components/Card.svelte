@@ -1,6 +1,5 @@
 <script>
-    export let image, title, date, game, type, players;
-
+    import { dateFormat, capitalizeFirstLetter } from "$lib/util/helpers";
 </script>
 
 <div class="card">
@@ -38,7 +37,7 @@
                 fill="#76809D"
             />
         </svg>
-        {type}
+        {capitalizeFirstLetter(campeonato.tipo)}
     </div>
     <div class="card-attribute">
         <svg
@@ -70,7 +69,7 @@
                 fill="#76809D"
             />
         </svg>
-        {date}
+        {dateFormat(campeonato.dataCriacao)}
     </div>
 </div>
 
