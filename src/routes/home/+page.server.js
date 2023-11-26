@@ -21,9 +21,7 @@ export async function load() {
             }
         }
     )
-    
-    console.log(equipeDoCampeonato);
-    
+        
     return {
         campeonatos
     }

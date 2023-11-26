@@ -1,31 +1,30 @@
-import { redirect, fail, error } from '@sveltejs/kit';
+import { fail, error } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma'
+import { redirect } from 'sveltekit-flash-message/server';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    requestEntry: async ({ request, params, locals }) => {
-        const { equipePedido } = Object.fromEntries(await request.formData());
+    requestEntry: async (event) => {
+        const { equipePedido } = Object.fromEntries(await event.request.formData());
 
         if (!equipePedido) {
-            // console.log("Selecione uma equipe");
             return fail(500, {message: "Equipe não selecionada"});
         }
 
         const pedidoExists = await prisma.PedidoCampeonato.findFirst({
             where: {
-                campeonatoId: Number(params.tournamentId),
+                campeonatoId: Number(event.params.tournamentId),
                 equipeId: Number(equipePedido)
             }
         });
 
         if (pedidoExists) {
-            // console.log("Esta equipe ja foi pedida");
             return fail(500, {message: "Esta equipe ja foi pedida"});
         }
 
         const equipeCampeonato = await prisma.EquipeDoCampeonato.findFirst({
             where: {
-                id: Number(params.tournamentId),
+                campeonatoId: Number(event.params.tournamentId),
                 equipeId: Number(equipePedido)
             }
         })
@@ -37,14 +36,43 @@ export const actions = {
         try {
             await prisma.PedidoCampeonato.create({
                 data: {
-                    campeonatoId: Number(params.tournamentId),
+                    campeonatoId: Number(event.params.tournamentId),
                     equipeId: Number(equipePedido)
                 }
             });
-            // console.log("Equipe pedida com sucesso");
+            
         } catch (error) {
-            // console.log("Não foi possível pedir a participação");
             return fail(500, {message: "Não foi possivel pedir a participação"});
         }
+
+        throw redirect(`/tournament-view/${event.params.tournamentId}`, { type:"success", message:"Pedido Enviado" }, event)
+    },
+    removeTeam: async (event) => {
+        const { equipeId } = Object.fromEntries(await event.request.formData());
+
+        if (!equipeId) {
+            console.log("NÃO FUNCIONOU!");
+            return fail(500, {message: "Equipe não selecionada"});
+        }
+
+        const equipeCampeonato = await prisma.EquipeDoCampeonato.findFirst({
+            where: {
+                campeonatoId: Number(event.params.tournamentId),
+                equipeId: Number(equipeId)
+            }
+        });
+
+        try {
+            await prisma.EquipeDoCampeonato.delete({
+                where: {
+                    id: Number(equipeCampeonato.id)
+                }
+            });
+            
+        } catch (error) {
+            console.log("Não foi possivel remover a participação\n" + error);
+            return fail(500, {message: "Não foi possivel remover a participação"});
+        }
+        throw redirect(`/tournament-view/${event.params.tournamentId}`, { type:"success", message:"Equipe removida com sucesso" }, event)
     }
 };

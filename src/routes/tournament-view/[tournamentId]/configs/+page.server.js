@@ -39,8 +39,8 @@ export async function load({ locals, params }) {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    default: async ({ request, params }) => {
-        const data = Object.fromEntries(await request.formData());
+    default: async (event) => {
+        const data = Object.fromEntries(await event.request.formData());
         const dataArray = Object.entries(data);
 
         if (!data) {
@@ -48,14 +48,14 @@ export const actions = {
         }
         const campeonato = await prisma.Campeonato.findUnique({
             where: {
-                id: Number(params.tournamentId)
+                id: Number(event.params.tournamentId)
             }
         });
 
         dataArray.forEach(async ([id, decision]) => {
             const pedidos = await prisma.PedidoCampeonato.findMany({
                 where: {
-                    campeonatoId: Number(params.tournamentId),
+                    campeonatoId: Number(event.params.tournamentId),
                     equipeId: Number(id)
                 }
             })
@@ -73,14 +73,14 @@ export const actions = {
     
                             prisma.EquipeDoCampeonato.create({
                                 data: {
-                                    campeonatoId: Number(params.tournamentId),
+                                    campeonatoId: Number(event.params.tournamentId),
                                     equipeId: Number(id),
                                     pontosTotais: 0
                                 }
                             })
                         ])
                     } catch (error) {
-                        console.log(error);
+                        
                         return fail(500, { message: `Não foi possível aceitar a equipe` });
                     }
                     break;
@@ -92,15 +92,15 @@ export const actions = {
                             }
                         });
                     } catch (error) {
-                        console.log(error);
+                        
                         return fail(500, { message: `Não foi possivel recusar a equipe` });
                     }
                     break;
                 default:
-                    console.log("Nenhuma decisão feita");
+                    
                     break;
             }
         });
-        throw redirect(`/tournament-view/${params.tournamentId}`, {type:"success", message: "Equipes Configuradas"});
+        throw redirect(`/tournament-view/${event.params.tournamentId}`, {type:"success", message: "Equipes Configuradas"}, event);
     }
 };
