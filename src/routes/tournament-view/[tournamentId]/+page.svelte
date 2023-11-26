@@ -30,6 +30,10 @@
         }
     }
 
+    function checkOwnership(ownerId) {
+        return $page.data.user.id === ownerId
+    }
+
 </script>
 
     <div class="tournament-content">
@@ -44,7 +48,10 @@
                 <h3>Equipes Inscritas</h3>
                 <div class="team-list">
                     {#each equipes as equipe}
-                        <TournamentTeamImage foto={equipe.foto} nome={equipe.nome}/>
+                        <form action="?/removeTeam" method="post">
+                            <input name="equipeId" type="text" hidden value={equipe.id}>
+                            <TournamentTeamImage editable={checkOwnership(owner.id)} foto={equipe.foto} nome={equipe.nome}/>
+                        </form>
                     {/each}
                 </div>
             </div>
