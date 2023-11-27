@@ -49,8 +49,28 @@ const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
+/**
+ * Calculates the total number of players in a championship based on the teams participating.
+ * @param {Object} campeonato - The championship object.
+ * @param {Array} equipeDoCampeonato - The array of teams participating in the championship.
+ * @param {Array} equipes - The array of all teams.
+ * @returns {number} The total number of players in the championship.
+ */
+function getNumeroJogadores(campeonato, equipeDoCampeonato, equipes) {
+    let countJogadores = 0
+    let equipe
+    equipeDoCampeonato.forEach(equipeNoCampeonato => {
+        if (equipeNoCampeonato.campeonatoId === campeonato.id) {
+            equipe = equipes.find(equipe => equipe.id === equipeNoCampeonato.equipeId)
+            countJogadores += equipe.numeroJogadores
+        }
+    })
+    return countJogadores
+}
+
 export {
     dateFormat,
     getSumOfJogadores,
-    capitalizeFirstLetter
+    capitalizeFirstLetter,
+    getNumeroJogadores
 };
