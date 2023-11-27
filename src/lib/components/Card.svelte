@@ -7,7 +7,7 @@
     
 </script>
 
-<div class="card">
+<a href="/tournament-view/{campeonato.id}" class="card">
     <img
         src="{campeonato.foto}" alt="Foto do Jogo 1"
     />
@@ -76,14 +76,22 @@
         </svg>
         {dateFormat(campeonato.dataCriacao)}
     </div>
-</div>
+</a>
 
 <style>
+    .card:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 10px 0px #ffb300a1;
+        transition: 100ms;
+    }
     .card {
         background-color: #2e3856;
         width: calc(33.33% - 20px);
         /* padding: 20px; */
         box-sizing: border-box;
+        display: block;
+        text-decoration: none;
+        color: var(--text-color);
     }
 
     .card img {
