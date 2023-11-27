@@ -8,7 +8,6 @@ export async function load() {
             orderBy: {
                 dataCriacao: 'desc'
             },
-            take: 3
         }
     );
 
@@ -21,7 +20,7 @@ export async function load() {
             }
         }
     )
-    
+
     const equipes = await prisma.Equipe.findMany({
         where: {
             id: {

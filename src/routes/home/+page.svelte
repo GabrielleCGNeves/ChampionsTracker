@@ -3,9 +3,10 @@
     import Card from "$lib/components/Card.svelte";
     import Title from "$lib/components/Title.svelte";
     import { page } from '$app/stores'
+    import { getNumeroJogadores } from "$lib/util/helpers"
 
     export let data;
-    $: ({ campeonatos } = data)
+    $: ({ campeonatos, equipeDoCampeonato, equipes } = data)
 </script>
 <Title title="Home" />
 
@@ -26,19 +27,18 @@
     <div class="section">
         <div class="title-button">
             <h1 class="title">Torneios Públicos</h1>
-            <Butao ref="seeMore" texto={"VER MAIS"} />
+            <Butao ref="seeMore" texto={"VER MAIS"} link="/home/all" />
         </div>
         <div class="card-container">
             {#each campeonatos as campeonato}
-                <Card {campeonato} />
+                <Card {campeonato} numJogadores={getNumeroJogadores(campeonato, equipeDoCampeonato, equipes)} />
             {/each}
         </div>
     </div>
-    {#if $page.data.user}
+    <!-- {#if $page.data.user}
     <div class="section">
         <div class="title-button">
             <h1 class="title">Seus Jogos</h1>
-            <!-- <Butao ref="seeMore" texto={"VER MAIS"} /> -->
         </div>
         <div class="list-container">
             <div class="header">
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    {/if}
+    {/if} -->
 </main>
 
 <style>
@@ -100,7 +100,7 @@
     }
 
     /* SEUS JOGOS */
-    .header .col {
+    /* .header .col {
         font-weight: bold;
     }
 
@@ -126,7 +126,7 @@
     .col {
         flex: 1;
         text-align: center;
-    }
+    } */
     /* ================================== */
 
 
