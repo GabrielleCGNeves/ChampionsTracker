@@ -6,6 +6,8 @@ services:
       - '3000:3000'
     networks:
       - docker_proxy
+    env_file:
+      - stack.env
 
 networks:
   docker_proxy:
