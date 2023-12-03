@@ -57,6 +57,7 @@ model PedidoCampeonato {
   dataPedido   DateTime   @default(now()) @map("pec_dataDoPedido")
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
   equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
+
   @@index([campeonatoId])
   @@index([equipeId])
   @@map("tb_pedido_campeonato")
@@ -159,6 +160,9 @@ model EquipeDoCampeonato {
   equipeId     Int        @map("eqc_idequipe")
   campeonatoId Int        @map("eqc_idcampeonato")
   pontosTotais Int        @default(0) @map("eqc_pontostotais")
+  vitorias     Int        @default(0) @map("eqc_vitorias")
+  derrotas     Int        @default(0) @map("eqc_derrotas")
+  empates      Int        @default(0) @map("eqc_empates")
   equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
 
