@@ -1,6 +1,6 @@
 <script>
     import { page } from "$app/stores";
-
+    import { goto } from '$app/navigation';
     import { derived } from "svelte/store";
     import { dateFormat, capitalizeFirstLetter} from "$lib/util/helpers";
     // Create a derived store that tracks the current path
@@ -25,9 +25,19 @@
     teams.forEach((team) => {
         countJogadores += team.numeroJogadores
     })
+
+    const gotoIndex = () => {
+        goto('/')
+    }
 </script>
 
 <div class="tournament-header">
+    <div class="back-arrow" on:keypress={gotoIndex} on:click={gotoIndex}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79 71" fill="none">
+            <path d="M35.3125 6L6 35.3125L35.3125 64.625" stroke="#BEBEBE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 35.3125H73" stroke="#BEBEBE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
     <div class="tournament-image-wrapper">
         <img
             class="tournament-image"
@@ -136,6 +146,16 @@
 </div>
 
 <style>
+    .back-arrow{
+        left: 20px;
+        top: 20px;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .back-arrow svg {
+        width: 60px;
+    }
     .active {
         border-bottom: 3px solid #ffb300;
     }
