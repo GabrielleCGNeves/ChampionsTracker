@@ -29,11 +29,25 @@ export const actions = {
         }
 
         try {
-            await prisma.Equipe.delete({
-                where: {
-                    id: Number(id)
-                }
-            })
+
+            await prisma.$transaction([
+                prisma.PedidoCampeonato.deleteMany({
+                    where: {
+                        equipeId: Number(id)
+                    }
+                }),
+                prisma.EquipeDoCampeonato.deleteMany({
+                    where: {
+                        equipeId: Number(id)
+                    }
+                }),
+                prisma.Equipe.delete({
+                    where: {
+                        id: Number(id)
+                    }
+                }),
+            ])
+
         } catch (error) {
             console.error(error);
             return fail(500, { message: "Não foi possível deletar a equipe" })
