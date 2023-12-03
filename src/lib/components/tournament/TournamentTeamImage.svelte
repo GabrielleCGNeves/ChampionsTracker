@@ -14,7 +14,7 @@
     </div>
 {:else}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => {showModal = true}} class="image-wrapper">
+    <div on:click={() => {showModal = true}} class="image-wrapper clickable">
         <img src={foto} class="equipe-img" alt="Foto da equipe {nome}" title={nome} />
     </div>
 {/if}
@@ -49,6 +49,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .clickable {
+        cursor: pointer;
     }
     .image-wrapper {
         width: 60px;

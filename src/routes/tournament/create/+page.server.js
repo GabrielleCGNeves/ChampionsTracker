@@ -83,7 +83,7 @@ createTournament: async ({ locals, request }) => {
                 jogo: tournamentGameName,
                 nome: tournamentName,
                 descricao: tournamentDescription,
-                foto: "https://placehold.co/600x400",
+                foto: `https://placehold.co/600x400/black/white?text=${tournamentName}`,
                 status: "ATIVO"
             }
         });

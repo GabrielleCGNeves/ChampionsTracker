@@ -57,8 +57,8 @@ model PedidoCampeonato {
   dataPedido   DateTime   @default(now()) @map("pec_dataDoPedido")
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
   equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
-  @@index([campeonatoId])
-  @@index([equipeId])
+
+  @@unique([campeonatoId, equipeId])
   @@map("tb_pedido_campeonato")
 }
 
@@ -74,6 +74,8 @@ model Equipe {
   EquipeDoCampeonato EquipeDoCampeonato[]
   JogadorDaEquipe    JogadorDaEquipe[]
   PedidoCampeonato   PedidoCampeonato[]
+  Equipe1            Partida[] @relation("equipe1")
+  Equipe2            Partida[] @relation("equipe2")
 
   @@index([usuarioId])
   @@map("tb_equipe")
@@ -85,7 +87,7 @@ model Fase {
   nome         String     @map("fas_nome")
   posicao      Int        @map("fas_posicao")
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
-  partidas     Partida[]
+  // partidas     Partida[]
 
   @@index([campeonatoId])
   @@map("tb_fase")
@@ -107,12 +109,18 @@ model Jogador {
 
 model Partida {
   id           Int            @id @default(autoincrement()) @map("par_idpartida")
-  faseId       Int            @map("fas_idfase")
+  equipe1Id    Int            @map("equ1_idequipe")
+  equipe2Id    Int            @map("equ2_idequipe")
+  placarEquipe1 Int           @default(0) @map("par_placarEquipe1")
+  placarEquipe2 Int           @default(0) @map("par_placarEquipe2")
+  // faseId       Int            @map("fas_idfase")
   data         DateTime       @map("par_data")
-  fase         Fase           @relation(fields: [faseId], references: [id], onUpdate: Restrict)
+  // fase         Fase           @relation(fields: [faseId], references: [id], onUpdate: Restrict)
   PontoJogador PontoJogador[]
+  Equipe1       Equipe         @relation("equipe1", fields: [equipe1Id], references: [id], onUpdate: Restrict)
+  Equipe2       Equipe         @relation("equipe2", fields: [equipe2Id], references: [id], onUpdate: Restrict)
 
-  @@index([faseId])
+  // @@index([faseId])
   @@map("tb_partida")
 }
 
@@ -159,11 +167,13 @@ model EquipeDoCampeonato {
   equipeId     Int        @map("eqc_idequipe")
   campeonatoId Int        @map("eqc_idcampeonato")
   pontosTotais Int        @default(0) @map("eqc_pontostotais")
+  vitorias     Int        @default(0) @map("eqc_vitorias")
+  derrotas     Int        @default(0) @map("eqc_derrotas")
+  empates      Int        @default(0) @map("eqc_empates")
   equipe       Equipe     @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
   campeonato   Campeonato @relation(fields: [campeonatoId], references: [id], onUpdate: Restrict)
 
-  @@index([equipeId])
-  @@index([campeonatoId])
+  @@unique([equipeId, campeonatoId])
   @@map("tb_equipe_do_campeonato")
 }
 
@@ -175,8 +185,7 @@ model JogadorDaEquipe {
   jogador   Jogador @relation(fields: [jogadorId], references: [id], onUpdate: Restrict)
   equipe    Equipe  @relation(fields: [equipeId], references: [id], onUpdate: Restrict)
 
-  @@index([jogadorId])
-  @@index([equipeId])
+  @@unique([jogadorId, equipeId])
   @@map("tb_jogador_da_equipe")
 }
 

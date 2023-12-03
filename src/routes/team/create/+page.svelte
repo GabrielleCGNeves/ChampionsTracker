@@ -54,7 +54,7 @@
             <input type="text" name="image" bind:value={receivedImage} style="display: none;">
         </div>
 
-        <br />
+        <!-- <br />
 
         <div class="grid-player">
             <Butao
@@ -69,7 +69,7 @@
         <Modal bind:showModal>
             <h1 slot="header">Criar Jogador</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi modi perspiciatis tempore debitis autem consequatur dicta corrupti recusandae eveniet, est consequuntur labore ipsam accusantium, hic facere pariatur molestias suscipit eligendi.</p>
-        </Modal>
+        </Modal> -->
 
         <br />
 
