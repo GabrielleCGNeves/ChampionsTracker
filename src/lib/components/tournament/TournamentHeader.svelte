@@ -119,7 +119,7 @@
         <div class="tournament-owner">
             <div class="owner-info">
                 <div class="owner-text">Organizado por</div>
-                <div class="owner-name">{owner.nome}</div>
+                <div class="owner-name">{owner.apelido}</div>
             </div>
             <img src={owner.foto} alt="" class="owner-img" />
         </div>
