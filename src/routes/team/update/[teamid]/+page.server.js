@@ -61,7 +61,7 @@ export const actions = {
                     nome,
                     numeroJogadores,
                     descricao,
-                    foto: `https://placehold.co/600x400/000000/FFFFFF/png?text=${nome.replace(/\s/g, '+')}`,
+                    foto: `https://api.dicebear.com/7.x/identicon/svg?seed=${teamName}`,
                     pontosTotais: 0
                 }
             })
